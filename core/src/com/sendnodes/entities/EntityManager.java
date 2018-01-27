@@ -26,7 +26,9 @@ public class EntityManager {
 	public EntityManager(int map_size) {
 		images = new HashMap<String, Texture>();
 		images.put("node_blue", new Texture("Nodes/Node_blue.png"));
-		images.put("node_grey", new Texture("Nodes/Node_red.png"));
+		images.put("node_red", new Texture("Nodes/Node_red.png"));
+		images.put("node_blue", new Texture("Nodes/Node_blue.png"));
+		images.put("node_grey", new Texture("Nodes/Node_grey.png"));
 
 		map = new Network(map_size);
 		players = new ArrayList<Player>();
@@ -69,7 +71,12 @@ public class EntityManager {
 
 				if (currentNode != null) {
 					// if (currentNode)
-					batch.draw(images.get("node_grey"), x * node_size[0], y * node_size[1], tile_size, tile_size);
+					if (map.getMap()[x][y].getOwner() != null){
+						if (map.getMap()[x][y].getOwner() == players.get(0))
+							batch.draw(images.get("node_blue"), x * node_size[0], y * node_size[1], tile_size, tile_size);
+					} else {
+						batch.draw(images.get("node_grey"), x * node_size[0], y * node_size[1], tile_size, tile_size);
+					}
 				}
 			}
 		}
