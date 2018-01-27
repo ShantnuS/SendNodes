@@ -11,8 +11,9 @@ public class Node {
 	private int shield;
 	private Player player;
 	private List<Node> latestPipePath;
+	private int x,y;
 	
-	public Node(){
+	public Node(int x, int y){
 		connections = new ArrayList<Connection>();
 		latestPipePath = new ArrayList<Node>();
 	}
@@ -51,5 +52,12 @@ public class Node {
 	
 	public List<Node> getPathBuilder() {
 		return latestPipePath;
+	}
+	
+	public int getX(){
+		return x;
+	}
+	public int getY(){
+		return y;
 	}
 }
