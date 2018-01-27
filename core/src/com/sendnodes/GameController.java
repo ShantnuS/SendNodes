@@ -12,10 +12,16 @@ public class GameController {
 	private SoundManager soundManager;
 	private UIManager uiManager;
 	
+	public static final GameController instance = new GameController(Properties.DEFAULT_MAP_SIZE);
+	
 	public GameController(int map_size) {
 		entityManager = new EntityManager(map_size);
 		soundManager = new SoundManager();
 		uiManager = new UIManager(entityManager);
+	}
+	
+	public static GameController getInstance() {
+		return instance;
 	}
 	
 	public void update() {

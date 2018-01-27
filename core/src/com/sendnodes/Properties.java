@@ -4,4 +4,5 @@ public class Properties {
 	public static final int SCREEN_WIDTH = 1920;
 	public static final int SCREEN_HEIGHT = 1080;
 	public static final int GRAPHICS_SCALE = 2;
+	public static final int DEFAULT_MAP_SIZE = 20;
 }
