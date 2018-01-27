@@ -5,20 +5,35 @@ import java.util.List;
 
 import com.sendnodes.entities.Player;
 
+import powerups.NodePowerUp;
+
 public class Node {
 	private ArrayList<Connection> connections;
 	private int hp;
 	private int shield;
 	private Player player;
 	private List<Node> latestPipePath;
+	private int x,y;
+	private NodePowerUp powerup;
 	
-	public Node(){
+	public Node(int x, int y){
 		connections = new ArrayList<Connection>();
 		latestPipePath = new ArrayList<Node>();
+		
+		this.x = x;
+		this.y = y;
 	}
 	
 	public int getHp() {
 		return hp;
+	}
+	
+	public void setPowerUp(NodePowerUp powerup) {
+		this.powerup = powerup;
+	}
+	
+	public NodePowerUp getPowerUp() {
+		return this.powerup;
 	}
 	
 	public int getShield() {
@@ -37,6 +52,14 @@ public class Node {
 		}
 	}
 	
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+	
+	public void setShield(int shield) {
+		this.shield = shield;
+	}
+	
 	public ArrayList<Connection> getConnections() {
 		return connections;
 	}
@@ -51,5 +74,12 @@ public class Node {
 	
 	public List<Node> getPathBuilder() {
 		return latestPipePath;
+	}
+	
+	public int getX(){
+		return x;
+	}
+	public int getY(){
+		return y;
 	}
 }

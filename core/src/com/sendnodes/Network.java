@@ -22,7 +22,7 @@ public class Network {
 		node_grid = new Node[size][size];
 		for (int x=0; x < size; x++) {
 			for (int y=0; y < size; y++) {
-				node_grid[x][y] = new Node();
+				node_grid[x][y] = new Node(x, y);
 			}
 		}
 		

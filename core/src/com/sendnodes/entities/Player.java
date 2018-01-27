@@ -12,8 +12,9 @@ public class Player {
 	private ArrayList<Attack> targets;
 	
 	public Player(Node startNode){
-		startingNode = new Node();
+		startingNode = startNode;
 		targets = new ArrayList<Attack>();
+		System.out.println("x:"+startingNode.getX()+" y:"+startingNode.getY());
 	}
 	
 	public boolean addTarget(Attack attack) {
@@ -60,5 +61,16 @@ public class Player {
 	
 	public ArrayList<Attack> getTargets(){
 		return targets;
+	}
+	
+	public Node getNode(){
+		return startingNode;
+	}
+	
+	public int getX(){
+		return startingNode.getX();
+	}
+	public int getY(){
+		return startingNode.getY();
 	}
 }
