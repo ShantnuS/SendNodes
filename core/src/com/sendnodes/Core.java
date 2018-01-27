@@ -15,7 +15,8 @@ public class Core extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		controller = new GameController(10);
+		controller = GameController.getInstance();
+		controller.create();
 	}
 
 	@Override

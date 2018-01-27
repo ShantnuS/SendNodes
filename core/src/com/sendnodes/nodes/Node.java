@@ -3,18 +3,30 @@ package com.sendnodes.nodes;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.sendnodes.entities.Player;
 
 import powerups.NodePowerUp;
 
 public class Node {
 	private ArrayList<Connection> connections;
-	private int hp;
+	private int hp = 300;
 	private int shield;
 	private Player player;
 	private List<Node> latestPipePath;
 	private int x,y;
 	private NodePowerUp powerup;
+	
 	
 	public Node(int x, int y){
 		connections = new ArrayList<Connection>();
@@ -44,12 +56,16 @@ public class Node {
 		return player;
 	}
 	
-	public void adjustHealth(int health, Player from) {
+	public boolean adjustHealth(int health, Player from) {
 		this.hp += health;
+		System.out.println("Health adjusted to " + this.hp);
 		if (hp<0) {
 			this.player = from;
 			hp = -hp;
+			System.out.print("Player destroyed");
+			return true;
 		}
+		return false;
 	}
 	
 	public void setHp(int hp) {
@@ -76,10 +92,14 @@ public class Node {
 		return latestPipePath;
 	}
 	
-	public int getX(){
+	public void setOwner(Player player){
+		this.player = player;
+	}
+	
+	public int getXPos(){
 		return x;
 	}
-	public int getY(){
+	public int getYPos(){
 		return y;
 	}
 }
