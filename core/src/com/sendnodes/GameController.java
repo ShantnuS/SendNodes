@@ -9,6 +9,21 @@ import soundengine.SoundManager;
 public class GameController {
 	
 	private EntityManager entityManager;
+	
+	//ALL THE GETTERS!
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	public SoundManager getSoundManager() {
+		return soundManager;
+	}
+
+	public UIManager getUiManager() {
+		return uiManager;
+	}
+
+
 	private SoundManager soundManager;
 	private UIManager uiManager;
 	
@@ -28,6 +43,7 @@ public class GameController {
 		entityManager.update();
 		uiManager.update();
 	}
+	
 	
 	public void render(SpriteBatch batch){
 		entityManager.render(batch);
