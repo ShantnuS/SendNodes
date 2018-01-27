@@ -41,6 +41,14 @@ public class Node {
 		}
 	}
 	
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+	
+	public void setShield(int shield) {
+		this.shield = shield;
+	}
+	
 	public ArrayList<Connection> getConnections() {
 		return connections;
 	}
