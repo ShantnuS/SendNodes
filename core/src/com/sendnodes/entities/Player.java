@@ -6,16 +6,20 @@ import java.util.Iterator;
 import com.sendnodes.nodes.Connection;
 import com.sendnodes.nodes.Node;
 
+import powerups.PlayerPowerUp;
+
 public class Player {
 	private Node startingNode;
 	private int ip = 500;
 	
 	private ArrayList<Attack> targets;
+	private ArrayList<PlayerPowerUp> powerups;
 	
 	public Player(Node startNode){
 		startingNode = startNode;
 		targets = new ArrayList<Attack>();
-		System.out.println("x:"+startingNode.getX()+" y:"+startingNode.getY());
+		powerups = new ArrayList<PlayerPowerUp>();
+		System.out.println("x:"+startingNode.getXPos()+" y:"+startingNode.getYPos());
 	}
 	
 	public boolean addTarget(Attack attack) {
@@ -90,9 +94,9 @@ public class Player {
 	}
 	
 	public int getX(){
-		return startingNode.getX();
+		return startingNode.getXPos();
 	}
 	public int getY(){
-		return startingNode.getY();
+		return startingNode.getYPos();
 	}
 }

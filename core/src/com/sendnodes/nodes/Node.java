@@ -3,6 +3,17 @@ package com.sendnodes.nodes;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.sendnodes.entities.Player;
 
 import powerups.NodePowerUp;
@@ -15,6 +26,7 @@ public class Node {
 	private List<Node> latestPipePath;
 	private int x,y;
 	private NodePowerUp powerup;
+	
 	
 	public Node(int x, int y){
 		connections = new ArrayList<Connection>();
@@ -84,10 +96,10 @@ public class Node {
 		this.player = player;
 	}
 	
-	public int getX(){
+	public int getXPos(){
 		return x;
 	}
-	public int getY(){
+	public int getYPos(){
 		return y;
 	}
 }

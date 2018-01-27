@@ -37,7 +37,6 @@ public class EntityManager {
 	
 	private ShapeRenderer sr;
 	
-	
     Stage stage;
     TextButton button;
     TextButtonStyle textButtonStyle;
@@ -57,12 +56,11 @@ public class EntityManager {
     	for (Node n:map.getMapNodesList()){
 			Label testLabel;
 			testLabel = new Label(""+n.getHp(),textStyle);
-	        testLabel.setBounds(n.getX()* node_size[0],n.getY()*node_size[1], node_size[0],node_size[1]);
+	        testLabel.setBounds(n.getXPos()* node_size[0],n.getYPos()*node_size[1], node_size[0],node_size[1]);
 	        testLabel.setFontScale(1f,1f);
 	        labels.add(testLabel);
 		}
     }
-	
 	public EntityManager(int map_size) {
 		node_size = new int[2];
 		node_size[0] = Properties.SCREEN_WIDTH/map_size;
@@ -117,7 +115,6 @@ public class EntityManager {
 
         
         // LABEL STUFF
-        
 	}
 	
 	public void render(SpriteBatch batch){
@@ -167,9 +164,9 @@ public class EntityManager {
 	
 	private int getLinePoint(Connection c, int point, boolean x){
 		if (x)
-			return (c.getConnectedNodes()[point].getX()*node_size[0])+(tile_size/2);
+			return (c.getConnectedNodes()[point].getXPos()*node_size[0])+(tile_size/2);
 		else
-			return (c.getConnectedNodes()[point].getY()*node_size[1])+(tile_size/2);
+			return (c.getConnectedNodes()[point].getYPos()*node_size[1])+(tile_size/2);
 	}
 
 	public void registerClick(int x, int y) {
