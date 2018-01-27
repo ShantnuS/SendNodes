@@ -14,7 +14,6 @@ public class NPUHealthUp extends NodePowerUp{
 		//Add health to the node 
 		
 	}
-
 	
 	public void finish() {
 		

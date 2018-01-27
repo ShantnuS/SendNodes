@@ -18,10 +18,6 @@ public class Node {
 		return shield;
 	}
 	
-	public ArrayList<Connection> getConnections() {
-		return connections;
-	}
-	
 	public Player getOwner(){
 		return player;
 	}
@@ -32,5 +28,17 @@ public class Node {
 			this.player = from;
 			hp = -hp;
 		}
+	}
+	
+	public ArrayList<Connection> getConnections() {
+		return connections;
+	}
+	
+	public void addConnection(Connection conn) {
+		connections.add(conn);
+	}
+	
+	public void removeConnection(Connection conn) {
+		connections.remove(conn);
 	}
 }
