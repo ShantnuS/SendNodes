@@ -19,8 +19,8 @@ public class EntityManager {
 	
 	public EntityManager(int map_size) {
 		images = new HashMap<String, Texture>();
-		images.put("node_blue", new Texture("Node_blue.png"));
-		images.put("node_grey", new Texture("Node_red.png"));
+		images.put("node_blue", new Texture("Nodes/Node_blue.png"));
+		images.put("node_grey", new Texture("Nodes/Node_grey.png"));
 		
 		map = new Network(map_size);
 		players = new ArrayList<Player>();

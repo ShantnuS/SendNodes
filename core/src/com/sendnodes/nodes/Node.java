@@ -16,6 +16,9 @@ public class Node {
 	public Node(int x, int y){
 		connections = new ArrayList<Connection>();
 		latestPipePath = new ArrayList<Node>();
+		
+		this.x = x;
+		this.y = y;
 	}
 	
 	public int getHp() {
