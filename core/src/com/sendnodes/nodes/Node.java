@@ -9,7 +9,7 @@ import powerups.NodePowerUp;
 
 public class Node {
 	private ArrayList<Connection> connections;
-	private int hp = 2000;
+	private int hp = 300;
 	private int shield;
 	private Player player;
 	private List<Node> latestPipePath;
