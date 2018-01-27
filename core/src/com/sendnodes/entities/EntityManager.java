@@ -69,8 +69,6 @@ public class EntityManager {
 
 		int xNode = (int) Math.floor(x / node_size[0]);
 		int yNode = (int) Math.floor(y / node_size[1]);
-		System.out.println(xNode + "  " + yNode);
-		System.out.println(map.getMap()[xNode][yNode]);
 		if (map.getMap()[xNode][yNode] != null) {
 			System.out.println(map.isConnected(players.get(0), players.get(0).getNode(), map.getMap()[xNode][yNode]));
 			if (map.getMap()[xNode][yNode].getOwner() != players.get(0)
@@ -78,7 +76,6 @@ public class EntityManager {
 				Attack attack = new Attack(players.get(0), map.getMap()[xNode][yNode], 1);
 				if (!Attack.alreadyExists(players.get(0).getTargets(), attack)) {
 					players.get(0).addTarget(attack);
-					System.out.println("Spammer");
 				}
 			}
 		}

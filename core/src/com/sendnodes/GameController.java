@@ -32,4 +32,8 @@ public class GameController {
 	public void render(SpriteBatch batch){
 		entityManager.render(batch);
 	}
+	
+	public SoundManager getSoundManager(){
+		return soundManager;
+	}
 }
