@@ -38,13 +38,9 @@ public class EntityManager {
 	private ShapeRenderer sr;
 	
     Stage stage;
-    TextButton button;
-    TextButtonStyle textButtonStyle;
-    BitmapFont font;
-    Skin skin;
-    TextureAtlas buttonAtlas;
     
     private void addLabels(Network map){
+    	stage = new Stage();
     	labels = new ArrayList<Label>();
     	
     	LabelStyle textStyle;
@@ -92,26 +88,6 @@ public class EntityManager {
 	}
 	
 	public void create() {
-		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);
-		font = new BitmapFont();
-		skin = new Skin();
-		buttonAtlas = new TextureAtlas(Gdx.files.internal("test/test.atlas"));
-		skin.addRegions(buttonAtlas);
-		textButtonStyle = new TextButtonStyle();
-		textButtonStyle.font = font;
-        textButtonStyle.up = skin.getDrawable("test01");
-        textButtonStyle.down = skin.getDrawable("test02");
-        textButtonStyle.checked = skin.getDrawable("test02");
-        button = new TextButton("", textButtonStyle);
-        stage.addActor(button);
-        
-        button.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Button Pressed");
-            }
-        });
 
         
         // LABEL STUFF
