@@ -14,7 +14,8 @@ import com.sendnodes.GameController;
 
 public class MenuScreen {	
     Stage stage;
-    TextButton button;
+    TextButton startButton;
+    TextButton exitButton;
     TextButtonStyle textButtonStyle;
     BitmapFont font;
     Skin skin;
@@ -28,24 +29,35 @@ public class MenuScreen {
 	public void create() {
 		font = new BitmapFont();
 		skin = new Skin();
-		buttonAtlas = new TextureAtlas(Gdx.files.internal("test/test.atlas"));
+		buttonAtlas = new TextureAtlas(Gdx.files.internal("UIAtlas/UI.atlas"));
 		skin.addRegions(buttonAtlas);
 		textButtonStyle = new TextButtonStyle();
 		textButtonStyle.font = font;
-        textButtonStyle.up = skin.getDrawable("test01");
-        textButtonStyle.down = skin.getDrawable("test03");
-        textButtonStyle.checked = skin.getDrawable("test02");
-        button = new TextButton("START", textButtonStyle);
-        button.setPosition(50, 70);
-        stage.addActor(button);
+        textButtonStyle.up = skin.getDrawable("UI_menu_button_up");
+        textButtonStyle.down = skin.getDrawable("UI_menu_button_down");
+        //textButtonStyle.checked = skin.getDrawable("test02");
+        startButton = new TextButton("START", textButtonStyle);
+        exitButton = new TextButton("EXIT", textButtonStyle);
+        startButton.setPosition(50, 70);
+        exitButton.setPosition(20, 150);
+        stage.addActor(startButton);
+        stage.addActor(exitButton);
         
-        button.addListener(new ChangeListener() {
+        startButton.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
             	GameController.getInstance().setScreenNumber(1);
                 System.out.println("Button Pressed");
             }
-        });     
+        });    
+        
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	System.exit(0);
+                System.out.println("Button Pressed");
+            }
+        });    
 	}
 
 	
