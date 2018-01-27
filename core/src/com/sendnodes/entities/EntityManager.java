@@ -2,6 +2,8 @@ package com.sendnodes.entities;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sendnodes.Network;
 
 public class EntityManager {
@@ -18,6 +20,10 @@ public class EntityManager {
 			player.update();
 		}
 		// map.update();
+	}
+	
+	public void render(SpriteBatch batch){
+		
 	}
 	
 }

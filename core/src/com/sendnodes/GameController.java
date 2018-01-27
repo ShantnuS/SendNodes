@@ -1,24 +1,22 @@
 package com.sendnodes;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sendnodes.entities.EntityManager;
 
 public class GameController {
 	
-	private static final GameController controller = new GameController();
-	
-	private EntityManager manager;
+	private EntityManager entityManager;
 	private final int map_size = 20;
 	
 	public GameController() {
-		manager = new EntityManager(map_size);
+		entityManager = new EntityManager(map_size);
 	}
 	
-	public static GameController getInstance() {
-		return controller;
+	public void update() {
+		entityManager.update();
 	}
 	
-	public void tick() {
-		manager.update();
+	public void render(SpriteBatch batch){
+		entityManager.render(batch);
 	}
-	
 }

@@ -25,6 +25,7 @@ public class Player {
 		attackTargets();
 	}
 	
+	//TODO: Prioritise attacks??
 	private void attackTargets(){
 		int remainingIp = ip;
 		for (Attack target:getTargets()) {
