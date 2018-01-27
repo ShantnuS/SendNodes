@@ -14,6 +14,11 @@ public class UIManager {
 	public UIManager(EntityManager em){
 		this.em = em;
 	}
+	
+	public UIManager() {
+		this.em = GameController.getInstance().getEntityManager();
+	}
+	
 	public void update(){
 		if(!Gdx.input.isButtonPressed(Input.Buttons.LEFT) && clickedDown == true){
 			int x = Gdx.input.getX();

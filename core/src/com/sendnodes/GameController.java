@@ -9,10 +9,25 @@ import soundengine.SoundManager;
 public class GameController {
 	
 	private EntityManager entityManager;
+	
+	//ALL THE GETTERS!
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	public SoundManager getSoundManager() {
+		return soundManager;
+	}
+
+	public UIManager getUiManager() {
+		return uiManager;
+	}
+
+
 	private SoundManager soundManager;
 	private UIManager uiManager;
 	
-	public static final GameController instance = new GameController(Properties.DEFAULT_MAP_SIZE);
+	private static final GameController instance = new GameController(Properties.DEFAULT_MAP_SIZE);
 	
 	public GameController(int map_size) {
 		entityManager = new EntityManager(map_size);
@@ -28,6 +43,7 @@ public class GameController {
 		entityManager.update();
 		uiManager.update();
 	}
+	
 	
 	public void render(SpriteBatch batch){
 		entityManager.render(batch);

@@ -1,5 +1,6 @@
 package powerups.player;
 
+import com.sendnodes.GameController;
 import com.sendnodes.entities.Player;
 
 import powerups.PlayerPowerUp;
@@ -14,7 +15,6 @@ public class PPUHealthUp extends PlayerPowerUp {
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
