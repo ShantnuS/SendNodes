@@ -19,8 +19,9 @@ public class EntityManager {
 
 	public EntityManager(int map_size) {
 		images = new HashMap<String, Texture>();
-		images.put("node_blue", new Texture("Nodes/Node_blue.png"));
-		images.put("node_grey", new Texture("Nodes/Node_grey.png"));
+		images.put("node_blue", new Texture("Node_blue.png"));
+		images.put("node_grey", new Texture("Node_red.png"));
+
 		map = new Network(map_size);
 		players = new ArrayList<Player>();
 		players.add(new Player(map.getRandomNode()));
@@ -57,12 +58,9 @@ public class EntityManager {
 	}
 
 	public void registerClick(int x, int y) {
-		System.out.println("=================================");
-		System.out.println(x + ":" + y);
 		y = Properties.SCREEN_HEIGHT - y;
 		x = x + (node_size[0] / 2);
 		y = y + (node_size[1] / 2);
-		System.out.println(x + ":" + y);
 
 		x = (x < 0) ? 0 : x;
 		y = (y < 0) ? 0 : y;
