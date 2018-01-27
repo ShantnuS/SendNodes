@@ -45,7 +45,7 @@ public class GameController {
 		soundManager = new SoundManager();
 		uiManager = new UIManager(entityManager);
 		musicManager = new MusicManager();
-
+		new Thread(musicManager).start();
 		stats = new Statistics();
 		screenNumber = 0;
 	}

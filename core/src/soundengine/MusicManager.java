@@ -55,6 +55,7 @@ public class MusicManager implements Runnable {
 		updateTrack();
 	}
 	
+	
 	public void pause()
 	{
 		currentSound.pause();			
@@ -65,6 +66,15 @@ public class MusicManager implements Runnable {
 	{
 		currentSound.play();	
 		paused = false;
+	}
+	
+	public void togglePause()
+	{
+		paused = !paused;
+		if(paused)
+			currentSound.pause();
+		else
+			currentSound.play();	
 	}
 	
 	public float setVol(float volume)
@@ -119,22 +129,22 @@ public class MusicManager implements Runnable {
 	
 	public void checkTrack() 
 	{
-		while(currentSound.isPlaying());
-
+		while(currentSound.isPlaying() || paused)
+		{
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@Override
 	public void run() {
 
-		while(true){
-			
+		while(true){			
 			updateTrack();
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			playTrack();
 			checkTrack();
 			nextTrack();
