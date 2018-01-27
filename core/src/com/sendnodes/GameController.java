@@ -14,11 +14,7 @@ public class GameController {
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}
-
-	public SoundManager getSoundManager() {
-		return soundManager;
-	}
-
+	
 	public UIManager getUiManager() {
 		return uiManager;
 	}
