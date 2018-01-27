@@ -35,6 +35,10 @@ public class GameController {
 		return instance;
 	}
 	
+	public void create() {
+		entityManager.create();
+	}
+	
 	public void update() {
 		entityManager.update();
 		uiManager.update();

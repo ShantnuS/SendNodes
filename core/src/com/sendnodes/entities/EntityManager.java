@@ -3,10 +3,19 @@ package com.sendnodes.entities;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.sendnodes.Network;
 import com.sendnodes.Properties;
 import com.sendnodes.nodes.Connection;
@@ -22,6 +31,14 @@ public class EntityManager {
 	private int imageSize;
 	
 	private ShapeRenderer sr;
+	
+	
+    Stage stage;
+    TextButton button;
+    TextButtonStyle textButtonStyle;
+    BitmapFont font;
+    Skin skin;
+    TextureAtlas buttonAtlas;
 	
 	public EntityManager(int map_size) {
 		images = new HashMap<String, Texture>();
@@ -48,6 +65,29 @@ public class EntityManager {
 		// map.update();
 	}
 	
+	public void create() {
+		stage = new Stage();
+		Gdx.input.setInputProcessor(stage);
+		font = new BitmapFont();
+		skin = new Skin();
+		buttonAtlas = new TextureAtlas(Gdx.files.internal("test/test.atlas"));
+		skin.addRegions(buttonAtlas);
+		textButtonStyle = new TextButtonStyle();
+		textButtonStyle.font = font;
+        textButtonStyle.up = skin.getDrawable("test01");
+        textButtonStyle.down = skin.getDrawable("test02");
+        textButtonStyle.checked = skin.getDrawable("test02");
+        button = new TextButton("", textButtonStyle);
+        stage.addActor(button);
+        
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                System.out.println("Button Pressed");
+            }
+        });     
+	}
+	
 	public void render(SpriteBatch batch){
 		
 		batch.end();
@@ -67,10 +107,17 @@ public class EntityManager {
 			for (int y=0; y<map.getMap()[x].length; y++){
 				Node currentNode = map.getMap()[x][y];
 
+
 				if (currentNode != null) {
 					// if (currentNode)
-					batch.draw(images.get("node_grey"), x * node_size[0], y * node_size[1], tile_size, tile_size);
+					if (map.getMap()[x][y].getOwner() != null){
+						if (map.getMap()[x][y].getOwner() == players.get(0))
+							batch.draw(images.get("node_blue"), x * node_size[0], y * node_size[1], tile_size, tile_size);
+					} else {
+						batch.draw(images.get("node_grey"), x * node_size[0], y * node_size[1], tile_size, tile_size);
+					}
 				}
+				
 			}
 		}
 
@@ -78,7 +125,8 @@ public class EntityManager {
 			batch.draw(images.get("node_blue"), p.getX() * node_size[0], p.getY() * node_size[1], tile_size, tile_size);
 		}
 		
-		
+		stage.draw();
+
 	}
 	
 	private int getLinePoint(Connection c, int point, boolean x){
