@@ -20,6 +20,7 @@ public class EntityManager {
 	public EntityManager(int map_size) {
 		images = new HashMap<String, Texture>();
 		images.put("node_blue", new Texture("Node_blue.png"));
+		images.put("node_grey", new Texture("Node_red.png"));
 		
 		map = new Network(map_size);
 		players = new ArrayList<Player>();
@@ -42,10 +43,17 @@ public class EntityManager {
 	public void render(SpriteBatch batch){
 		for (int x=0; x<map.getMap().length; x++){
 			for (int y=0; y<map.getMap()[x].length; y++){
-				if (map.getMap()[x][y] != null){
-					batch.draw(images.get("node_blue"), x*node_size[0], y*node_size[1], tile_size, tile_size);
+				Node currentNode = map.getMap()[x][y];
+				
+				if (currentNode != null){
+					//if (currentNode)
+					batch.draw(images.get("node_grey"), x*node_size[0], y*node_size[1], tile_size, tile_size);
 				}
 			}
+		}
+		
+		for (Player p : players){
+			batch.draw(images.get("node_blue"), p.getX()*node_size[0], p.getY()*node_size[1], tile_size, tile_size);
 		}
 	}
 	
