@@ -57,4 +57,11 @@ public class EntityManager {
 		}
 	}
 	
+	public void registerClick(int x, int y){
+		int xNode = (int) Math.floor(x/node_size[0]);
+		int yNode = (int) Math.floor(y/node_size[1]);
+		
+		//players.get(0).addTarget(new Attack())
+	}
+	
 }
