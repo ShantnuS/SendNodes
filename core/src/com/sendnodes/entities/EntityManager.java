@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -30,6 +33,8 @@ public class EntityManager {
 	private int tile_size;
 	private int imageSize;
 	
+	private ArrayList<Label> labels;
+	
 	private ShapeRenderer sr;
 	
 	
@@ -39,8 +44,30 @@ public class EntityManager {
     BitmapFont font;
     Skin skin;
     TextureAtlas buttonAtlas;
+    
+    private void addLabels(Network map){
+    	labels = new ArrayList<Label>();
+    	
+    	LabelStyle textStyle;
+        BitmapFont font = new BitmapFont();
+        
+        textStyle = new LabelStyle();
+        textStyle.font = font;
+    	
+    	for (Node n:map.getMapNodesList()){
+			Label testLabel;
+			testLabel = new Label(""+n.getHp(),textStyle);
+	        testLabel.setBounds(n.getX()* node_size[0],n.getY()*node_size[1], node_size[0],node_size[1]);
+	        testLabel.setFontScale(1f,1f);
+	        labels.add(testLabel);
+		}
+    }
 	
 	public EntityManager(int map_size) {
+		node_size = new int[2];
+		node_size[0] = Properties.SCREEN_WIDTH/map_size;
+		node_size[1] = Properties.SCREEN_HEIGHT/map_size;
+		
 		images = new HashMap<String, Texture>();
 		images.put("node_blue", new Texture("Nodes/Node_blue.png"));
 		images.put("node_red", new Texture("Nodes/Node_red.png"));
@@ -48,13 +75,11 @@ public class EntityManager {
 		images.put("node_grey", new Texture("Nodes/Node_grey.png"));
 
 		map = new Network(map_size);
+		addLabels(map);
 		players = new ArrayList<Player>();
 		players.add(new Player(map.getRandomNode()));
 		players.get(0).getNode().setOwner(players.get(0));
 
-		node_size = new int[2];
-		node_size[0] = Properties.SCREEN_WIDTH/map_size;
-		node_size[1] = Properties.SCREEN_HEIGHT/map_size;
 		
 		tile_size = images.get("node_blue").getWidth()*Properties.GRAPHICS_SCALE;
 		
@@ -88,10 +113,16 @@ public class EntityManager {
             public void changed (ChangeEvent event, Actor actor) {
                 System.out.println("Button Pressed");
             }
-        });     
+        });
+
+        
+        // LABEL STUFF
+        
 	}
 	
 	public void render(SpriteBatch batch){
+		for (int i=0; i<labels.size(); i++)
+			labels.get(i).setText(""+map.getMapNodesList().get(i).getHp());
 		
 		batch.end();
 		sr.begin(ShapeType.Line);
@@ -128,8 +159,10 @@ public class EntityManager {
 			batch.draw(images.get("node_blue"), p.getX() * node_size[0], p.getY() * node_size[1], tile_size, tile_size);
 		}
 		
+		for (Label l:labels)
+			stage.addActor(l);
+		
 		stage.draw();
-
 	}
 	
 	private int getLinePoint(Connection c, int point, boolean x){
