@@ -2,6 +2,7 @@ package com.sendnodes.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.sendnodes.GameController;
 import com.sendnodes.entities.EntityManager;
 
 public class UIManager {
@@ -10,6 +11,11 @@ public class UIManager {
 	public UIManager(EntityManager em){
 		this.em = em;
 	}
+	
+	public UIManager() {
+		this.em = GameController.getInstance().getEntityManager();
+	}
+	
 	public void update(){
 		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
 			int x = Gdx.input.getX();
