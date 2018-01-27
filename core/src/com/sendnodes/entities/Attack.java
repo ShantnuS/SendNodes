@@ -1,5 +1,7 @@
 package com.sendnodes.entities;
 
+import java.util.ArrayList;
+
 import com.sendnodes.nodes.Node;
 
 public class Attack {
@@ -23,6 +25,15 @@ public class Attack {
 	
 	public Node getTarget(){
 		return target;
+	}
+	
+	public static boolean alreadyExists(ArrayList<Attack> attacks, Attack attack){
+		for(Attack alreadyAttacking:attacks){
+			if(alreadyAttacking.getTarget() == attack.getTarget() && alreadyAttacking.getAttacker()==attack.getAttacker()){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

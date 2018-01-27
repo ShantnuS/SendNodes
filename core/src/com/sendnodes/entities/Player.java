@@ -27,6 +27,9 @@ public class Player {
 	}
 	
 	public void update(){
+		for (Attack attackTest : targets) {
+			System.out.println(attackTest.getTarget());
+		}
 		attackTargets();
 	}
 	
