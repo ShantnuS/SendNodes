@@ -11,65 +11,28 @@ import com.sendnodes.nodes.Node;
 public class Network {
 
 	private ArrayList<Node> nodes;
+	private ArrayList<Connection> connections;
+	
 	private Node[][] node_grid;
 	private int size;
 	private Random r = new Random();
 	
+	public void addConnection(int x1, int y1, int x2, int y2){
+		Connection conn = new Connection(node_grid[x1][y1], node_grid[x2][y2], 1);
+		node_grid[x1][y1].addConnection(conn);
+		node_grid[x2][y2].addConnection(conn);
+		connections.add(conn);
+	}
+	
 	public Network(int size) {
 		this.size = size;
 		nodes = new ArrayList<Node>();
+		connections = new ArrayList<Connection>();
 		
 		node_grid = new Node[size][size];
 		for (int x=0; x < size; x++) {
 			for (int y=0; y < size; y++) {
 				node_grid[x][y] = new Node(x, y);
-			}
-		}
-		
-		
-		Connection conn;
-		
-		for (int x=0; x < size; x++) {
-			for (int y=0; y < size; y++) {
-				// for each default node that is not on the outside, generate adjacent connections 66% of the time.
-				if (x > 1 && y > 1 && x < size-1 && y < size-1) {
-					if (r.nextInt(3) != 1) {
-						conn = new Connection(node_grid[x][y], node_grid[x+1][y], 1);
-						node_grid[x][y].addConnection(conn);
-						node_grid[x+1][y].addConnection(conn);
-					}
-					
-					if (r.nextInt(3) != 1) {
-						conn = new Connection(node_grid[x][y], node_grid[x][y+1], 1);
-						node_grid[x][y].addConnection(conn);
-						node_grid[x][y+1].addConnection(conn);
-					}
-					
-					if (r.nextInt(3) != 1) {
-						conn = new Connection(node_grid[x][y], node_grid[x+1][y+1], 1);
-						node_grid[x][y].addConnection(conn);
-						node_grid[x+1][y+1].addConnection(conn);
-					}
-					
-					if (r.nextInt(3) != 1) {
-						conn = new Connection(node_grid[x][y], node_grid[x-1][y], 1);
-						node_grid[x][y].addConnection(conn);
-						node_grid[x-1][y].addConnection(conn);
-					}
-					
-					if (r.nextInt(3) != 1) {
-						conn = new Connection(node_grid[x][y], node_grid[x][y-1], 1);
-						node_grid[x][y].addConnection(conn);
-						node_grid[x][y-1].addConnection(conn);
-					}
-					
-					if (r.nextInt(3) != 1) {
-						conn = new Connection(node_grid[x][y], node_grid[x-1][y-1], 1);
-						node_grid[x][y].addConnection(conn);
-						node_grid[x-1][y-1].addConnection(conn);
-					}				
-				}
-				
 			}
 		}
 		
@@ -92,6 +55,54 @@ public class Network {
 					nodes.add(node_grid[x][y]);
 			}
 		}
+		
+		
+		for (int x=0; x < size; x++) {
+			for (int y=0; y < size; y++) {
+				// for each default node that is not on the outside, generate adjacent connections 66% of the time.
+				
+				if (node_grid[x][y]!=null){
+					if (x > 0 && y > 0 && x < size-1 && y < size-1) {
+	//					if (r.nextInt(3) != 1) {
+	//						addConnection(x, y, x+1, y);
+	//					}
+	//					if (r.nextInt(3) != 1) {
+	//						addConnection(x, y, x-1, y);
+	//					}
+	//					
+	//					if (r.nextInt(3) != 1) {
+	//						addConnection(x, y, x, y+1);
+	//					}
+	//					if (r.nextInt(3) != 1) {
+	//						addConnection(x, y, x, y-1);
+	//					}
+						
+						
+						if (r.nextInt(3) != 1) {
+							if (node_grid[x-1][y-1]!=null)
+								addConnection(x, y, x-1, y-1);
+						}
+						if (r.nextInt(3) != 1) {
+							if (node_grid[x+1][y-1]!=null)
+								addConnection(x, y, x+1, y-1);
+						}
+	
+						if (r.nextInt(3) != 1) {
+							if (node_grid[x+1][y+1]!=null)
+								addConnection(x, y, x+1, y+1);
+						}		
+	
+						if (r.nextInt(3) != 1) {
+							if (node_grid[x-1][y+1]!=null)
+								addConnection(x, y, x-1, y+1);
+						}		
+					}
+				}
+				
+			}
+		}
+		
+		
 	}
 	
 	// use for starting node
@@ -128,6 +139,10 @@ public class Network {
         }
         
         return pathExists;
+	}
+	
+	public ArrayList<Connection> getConnections(){
+		return connections;
 	}
 	
 	public boolean pipeProblem(Player player, Node node1, Node node2) {
