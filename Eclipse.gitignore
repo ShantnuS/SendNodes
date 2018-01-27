@@ -39,6 +39,7 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+.prefs
 
 # STS (Spring Tool Suite)
 .springBeans
