@@ -6,9 +6,9 @@ import com.badlogic.gdx.audio.Sound;
 
 public abstract class AudioManager {
 
-	public float volume = 1.0f;
-	public boolean muted = false;
-	public ArrayList<Sound> sounds = new ArrayList<Sound>();
+	public volatile float volume = 1.0f;
+	public volatile boolean muted = false;
+	public volatile ArrayList<Sound> sounds = new ArrayList<Sound>();
 	
 	public abstract void playSound(int NAME);
 
