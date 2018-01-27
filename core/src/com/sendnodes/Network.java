@@ -11,6 +11,7 @@ import com.sendnodes.nodes.Node;
 public class Network {
 
 	private ArrayList<Node> nodes;
+	private Node[][] node_grid;
 	private int size;
 	private Random r = new Random();
 	
@@ -18,7 +19,7 @@ public class Network {
 		this.size = size;
 		nodes = new ArrayList<Node>();
 		
-		Node[][] node_grid = new Node[size][size];
+		node_grid = new Node[size][size];
 		for (int x=0; x < size; x++) {
 			for (int y=0; y < size; y++) {
 				node_grid[x][y] = new Node();
@@ -131,4 +132,12 @@ public class Network {
 		return size;
 	}
 
+	public Node[][] getMap() {
+		return node_grid;
+	}
+	
+	public ArrayList<Node> getMapNodesList() {
+		return nodes;
+	}
+	
 }

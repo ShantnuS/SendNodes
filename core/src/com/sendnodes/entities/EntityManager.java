@@ -8,11 +8,13 @@ import com.sendnodes.Network;
 
 public class EntityManager {
 	
-	Network map;
-	ArrayList<Player> players;
+	private Network map;
+	private ArrayList<Player> players;
 	
 	public EntityManager(int map_size) {
 		map = new Network(map_size);
+		players = new ArrayList<Player>();
+		players.add(new Player(map.getRandomNode()));
 	}
 
 	public void update() {

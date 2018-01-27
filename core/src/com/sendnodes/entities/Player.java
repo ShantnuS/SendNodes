@@ -11,6 +11,11 @@ public class Player {
 	
 	private ArrayList<Attack> targets;
 	
+	public Player(Node startNode){
+		startingNode = new Node();
+		targets = new ArrayList<Attack>();
+	}
+	
 	public boolean addTarget(Attack attack) {
 		targets.add(attack);
 		return true;

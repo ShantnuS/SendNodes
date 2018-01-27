@@ -10,6 +10,10 @@ public class Node {
 	private int shield;
 	private Player player;
 	
+	public Node(){
+		connections = new ArrayList<Connection>();
+	}
+	
 	public int getHp() {
 		return hp;
 	}
