@@ -7,7 +7,7 @@ import com.sendnodes.nodes.Node;
 
 public class Player {
 	private Node startingNode;
-	private int ip;
+	private int ip = 500;
 	
 	private ArrayList<Attack> targets;
 	
@@ -28,31 +28,47 @@ public class Player {
 	}
 	
 	public void update(){
-		for (Attack attackTest : targets) {
-			System.out.println(attackTest.getTarget());
-		}
 		attackTargets();
 	}
 	
 	//TODO: Prioritise attacks??
 	private void attackTargets(){
 		int remainingIp = ip;
-		for (Attack target:getTargets()) {
-			int amountToDamageTarget = target.getDamage();
+		for (Attack attack:getTargets()) {
+			int amountToDamageTarget = attack.getDamage();
 			if(remainingIp <= 0){
-				return;
+				break;
 			}
-			for(Connection conn:target.getTarget().getConnections()) {
+			System.out.println("test2");
+			for(Connection conn:attack.getTarget().getConnections()) {
+				System.out.println("Amount to damage target " + amountToDamageTarget);
+				
+				System.out.println("Remaining IP " + remainingIp);
+				System.out.println(conn.getOtherNode(attack.getTarget()));
+				System.out.println(conn.getOtherNode(this.getNode()));
+				System.out.println(this);
+				
 				if(amountToDamageTarget>remainingIp){
+					System.out.println("test4");
 					amountToDamageTarget = remainingIp;
 				}
-				if(conn.getOtherNode(target.getTarget()).getOwner() == this) {
+				if(conn.getOtherNode(attack.getTarget()).getOwner() == this) {
 					if(amountToDamageTarget<=conn.getBandwidth()) {
-						target.getTarget().adjustHealth(amountToDamageTarget, this);
+						System.out.println("test5");
+						boolean destroyed = attack.getTarget().adjustHealth(amountToDamageTarget, this);
+						if(destroyed){
+							targets.remove(attack);
+							break;
+						}
 						amountToDamageTarget-=amountToDamageTarget;
 						remainingIp-=amountToDamageTarget;
 					}else {
-						target.getTarget().adjustHealth(conn.getBandwidth(), this);
+						System.out.println("test6");
+						boolean destroyed = attack.getTarget().adjustHealth(conn.getBandwidth(), this);
+						if(destroyed){
+							targets.remove(attack);
+							break;
+						}
 						amountToDamageTarget-=conn.getBandwidth();
 						remainingIp-=conn.getBandwidth();
 					}					
