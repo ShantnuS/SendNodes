@@ -32,14 +32,6 @@ public class EntityManager {
 	
 	private ShapeRenderer sr;
 	
-	
-    Stage stage;
-    TextButton button;
-    TextButtonStyle textButtonStyle;
-    BitmapFont font;
-    Skin skin;
-    TextureAtlas buttonAtlas;
-	
 	public EntityManager(int map_size) {
 		images = new HashMap<String, Texture>();
 		images.put("node_blue", new Texture("Nodes/Node_blue.png"));
@@ -69,26 +61,7 @@ public class EntityManager {
 	}
 	
 	public void create() {
-		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);
-		font = new BitmapFont();
-		skin = new Skin();
-		buttonAtlas = new TextureAtlas(Gdx.files.internal("test/test.atlas"));
-		skin.addRegions(buttonAtlas);
-		textButtonStyle = new TextButtonStyle();
-		textButtonStyle.font = font;
-        textButtonStyle.up = skin.getDrawable("test01");
-        textButtonStyle.down = skin.getDrawable("test02");
-        textButtonStyle.checked = skin.getDrawable("test02");
-        button = new TextButton("", textButtonStyle);
-        stage.addActor(button);
-        
-        button.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Button Pressed");
-            }
-        });     
+
 	}
 	
 	public void render(SpriteBatch batch){
@@ -127,16 +100,14 @@ public class EntityManager {
 		for (Player p : players) {
 			batch.draw(images.get("node_blue"), p.getX() * node_size[0], p.getY() * node_size[1], tile_size, tile_size);
 		}
-		
-		stage.draw();
 
 	}
 	
 	private int getLinePoint(Connection c, int point, boolean x){
 		if (x)
-			return (c.getConnectedNodes()[point].getX()*node_size[0])+(tile_size/2);
+			return (c.getConnectedNodes()[point].getXPos()*node_size[0])+(tile_size/2);
 		else
-			return (c.getConnectedNodes()[point].getY()*node_size[1])+(tile_size/2);
+			return (c.getConnectedNodes()[point].getYPos()*node_size[1])+(tile_size/2);
 	}
 
 	public void registerClick(int x, int y) {
