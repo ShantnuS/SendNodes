@@ -115,17 +115,27 @@ public class Network {
             
             for (Connection conn : current.getConnections()) {
             	Node other = conn.getOtherNode(current);
-            	if (other.getOwner() == player)
-            		queue.add(conn.getOtherNode(current));
+            	if (other.getOwner() == player) {
+            		other.getPathBuilder().addAll(current.getPathBuilder());
+            		other.getPathBuilder().add(current);
+            		queue.add(other);
+            	}
             	else if (other == node2) {
             		pathExists = true;
                     break;
             	}
-            		
             }
         }
         
         return pathExists;
+	}
+	
+	public boolean pipeProblem(Player player, Node node1, Node node2) {
+		if (!isConnected(player, node1, node2))
+			return false;
+		
+		
+		return true;
 	}
 	
 	public int getMapSize() {
