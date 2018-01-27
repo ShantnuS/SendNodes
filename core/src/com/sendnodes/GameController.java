@@ -22,13 +22,19 @@ public class GameController {
 
 	private SoundManager soundManager;
 	private UIManager uiManager;
+	private Statistics stats;
 	
+	public Statistics getStats() {
+		return stats;
+	}
+
 	private static final GameController instance = new GameController(Properties.DEFAULT_MAP_SIZE);
 	
 	public GameController(int map_size) {
 		entityManager = new EntityManager(map_size);
 		soundManager = new SoundManager();
 		uiManager = new UIManager(entityManager);
+		stats = new Statistics();
 	}
 	
 	public static GameController getInstance() {
