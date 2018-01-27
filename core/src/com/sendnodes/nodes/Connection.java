@@ -15,4 +15,13 @@ public class Connection {
 	public int getBandwidth() {
 		return bandwidth;
 	}
+	
+	public Node getOtherNode(Node node){
+		if(vertices[0] == node) {
+			return vertices[1];
+		}else if(vertices[1] == node){
+			return vertices[0];
+		}
+		return null;
+	}
 }

@@ -1,9 +1,11 @@
 package com.sendnodes.nodes;
 
+import java.util.ArrayList;
+
 import com.sendnodes.entities.Player;
 
 public class Node {
-	private Connection[] connections;
+	private ArrayList<Connection> connections;
 	private int hp;
 	private int shield;
 	private Player player;
@@ -16,6 +18,14 @@ public class Node {
 		return shield;
 	}
 	
+	public ArrayList<Connection> getConnections() {
+		return connections;
+	}
+	
+	public Player getOwner(){
+		return player;
+	}
+	
 	public void adjustHealth(int health, Player from) {
 		this.hp += health;
 		if (hp<0) {
@@ -23,6 +33,4 @@ public class Node {
 			hp = -hp;
 		}
 	}
-	
-	
 }
