@@ -1,6 +1,7 @@
 package com.sendnodes.entities;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.sendnodes.nodes.Connection;
 import com.sendnodes.nodes.Node;
@@ -34,7 +35,9 @@ public class Player {
 	//TODO: Prioritise attacks??
 	private void attackTargets(){
 		int remainingIp = ip;
-		for (Attack attack:getTargets()) {
+		Iterator<Attack> iterAttack = getTargets().iterator();
+		while (iterAttack.hasNext()) {
+			Attack attack = iterAttack.next();
 			int amountToDamageTarget = attack.getDamage();
 			if(remainingIp <= 0){
 				break;
@@ -57,7 +60,7 @@ public class Player {
 						System.out.println("test5");
 						boolean destroyed = attack.getTarget().adjustHealth(amountToDamageTarget, this);
 						if(destroyed){
-							targets.remove(attack);
+							iterAttack.remove();
 							break;
 						}
 						amountToDamageTarget-=amountToDamageTarget;
@@ -66,7 +69,7 @@ public class Player {
 						System.out.println("test6");
 						boolean destroyed = attack.getTarget().adjustHealth(conn.getBandwidth(), this);
 						if(destroyed){
-							targets.remove(attack);
+							iterAttack.remove();
 							break;
 						}
 						amountToDamageTarget-=conn.getBandwidth();
