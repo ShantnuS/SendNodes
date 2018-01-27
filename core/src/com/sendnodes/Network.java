@@ -29,8 +29,8 @@ public class Network {
 	private Object getRandomSetValue(Set set) {
 		int noNodesAdded = set.size();
 		int item = r.nextInt(noNodesAdded); // In real life, the Random
-												// object should be rather more
-												// shared than this
+											// object should be rather more
+											// shared than this
 		int j = 0;
 		for (Object obj : set) {
 			if (j == item)
@@ -59,13 +59,13 @@ public class Network {
 		nodesAdded.add(node_grid[treeInitialX][treeInitialY]);
 		HashSet<String> connectionTracker = new HashSet<String>();
 		for (int i = 1; i < numberOfNodes; i++) {
-			if(nodesAdded.size()== size * size){
+			if (nodesAdded.size() == size * size) {
 				break;
 			}
 			Node currentNode = (Node) getRandomSetValue(nodesAdded);
 			int tempX = 0;
 			int tempY = 0;
-			while (tempX == tempY) {
+			while (tempX == 0 && tempY == 0) {
 				tempX = r.nextInt(3) - 1;
 				tempY = r.nextInt(3) - 1;
 			}
@@ -73,16 +73,45 @@ public class Network {
 			tempX += currentNode.getXPos();
 			tempY += currentNode.getYPos();
 
-			if (!(tempX < 0 || tempY < 0 || tempY > size - 1 || tempX > size - 1 || nodesAdded.contains(node_grid[tempX][tempY]))) {
+			if (!(tempX < 0 || tempY < 0 || tempY > size - 1 || tempX > size - 1
+					|| nodesAdded.contains(node_grid[tempX][tempY]))) {
 				node_grid[tempX][tempY] = new Node(tempX, tempY);
 				addConnection(currentNode.getXPos(), currentNode.getYPos(), tempX, tempY);
 				connectionTracker.add(currentNode.getXPos() + "" + currentNode.getYPos() + "" + tempX + "" + tempY);
 				nodesAdded.add(node_grid[tempX][tempY]);
-			}else{
-				numberOfNodes += 1; 
+			} else {
+				numberOfNodes += 1;
 			}
 		}
-		
+		for (Node node : nodesAdded) {
+			for (int x = -1; x < 2; x++) {
+				for (int y = -1; y < 2; y++) {
+					if (!(x == 0 && y == 0)) {
+						int newX = node.getXPos() + x;
+						int newY = node.getYPos() + y;
+
+						if (newX > 0 && newY > 0 && newX < size && newY < size && node_grid[newX][newY] != null) {
+							if (r.nextDouble() < 0.1) {
+								boolean alreadyAdded = false;
+								for (String conn : connectionTracker) {
+									if (conn.equals(node.getXPos() + "" + node.getYPos() + "" + newX + "" + newY)
+											|| conn.equals(
+													newX + "" + newY + "" + node.getXPos() + "" + node.getYPos())) {
+										alreadyAdded = true;
+									}
+								}
+								if (alreadyAdded == false) {
+									addConnection(node.getXPos(), node.getYPos(), newX, newY);
+									connectionTracker.add(node.getXPos() + "" + node.getYPos() + "" + newX + "" + newY);
+								}
+
+							}
+						}
+					}
+				}
+			}
+		}
+
 		nodes.addAll(nodesAdded);
 	}
 
