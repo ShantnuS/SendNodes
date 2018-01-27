@@ -5,8 +5,11 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.sendnodes.Network;
 import com.sendnodes.Properties;
+import com.sendnodes.nodes.Connection;
 import com.sendnodes.nodes.Node;
 
 public class EntityManager {
@@ -16,6 +19,9 @@ public class EntityManager {
 	private ArrayList<Player> players;
 	private int[] node_size;
 	private int tile_size;
+	private int imageSize;
+	
+	private ShapeRenderer sr;
 	
 	public EntityManager(int map_size) {
 		images = new HashMap<String, Texture>();
@@ -31,6 +37,8 @@ public class EntityManager {
 		node_size[1] = Properties.SCREEN_HEIGHT/map_size;
 		
 		tile_size = images.get("node_blue").getWidth()*Properties.GRAPHICS_SCALE;
+		
+		sr = new ShapeRenderer();
 	}
 
 	public void update() {
@@ -41,6 +49,20 @@ public class EntityManager {
 	}
 	
 	public void render(SpriteBatch batch){
+		
+		batch.end();
+		sr.begin(ShapeType.Line);
+		
+		for (Connection c:map.getConnections()){
+			sr.setColor(1, 1, 1, 1); 
+			sr.line(getLinePoint(c, 0, true), getLinePoint(c, 0, false), 
+					getLinePoint(c, 1, true), getLinePoint(c, 1, false));
+			
+		}
+		
+		sr.end();
+		batch.begin();
+		
 		for (int x=0; x<map.getMap().length; x++){
 			for (int y=0; y<map.getMap()[x].length; y++){
 				Node currentNode = map.getMap()[x][y];
@@ -55,6 +77,15 @@ public class EntityManager {
 		for (Player p : players){
 			batch.draw(images.get("node_blue"), p.getX()*node_size[0], p.getY()*node_size[1], tile_size, tile_size);
 		}
+		
+		
+	}
+	
+	private int getLinePoint(Connection c, int point, boolean x){
+		if (x)
+			return (c.getConnectedNodes()[point].getX()*node_size[0])+(tile_size/2);
+		else
+			return (c.getConnectedNodes()[point].getY()*node_size[1])+(tile_size/2);
 	}
 	
 	public void registerClick(int x, int y){
