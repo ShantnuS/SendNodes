@@ -10,6 +10,12 @@ local.properties
 .loadpath
 .recommenders
 
+#The ones that were causing issues
+.settings/org.eclipse.buildship.core.prefs
+core/.settings/org.eclipse.buildship.core.prefs
+desktop/.settings/org.eclipse.buildship.core.prefs
+
+
 # External tool builders
 .externalToolBuilders/
 
