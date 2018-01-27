@@ -1,2 +1,13 @@
-#Sat Jan 27 11:42:05 GMT 2018
+build.commands=org.eclipse.jdt.core.javabuilder
+connection.arguments=
+connection.gradle.distribution=GRADLE_DISTRIBUTION(WRAPPER)
+connection.gradle.user.home=null
+connection.java.home=null
+connection.jvm.arguments=
+>>>>>>> 3cb7988b7738cd65d2ae223a7991928aefac1ba1
 connection.project.dir=..
+derived.resources=.gradle,build
+eclipse.preferences.version=1
+linked.resources=assets
+natures=org.eclipse.jdt.core.javanature
+project.path=\:desktop
