@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sendnodes.Network;
 import com.sendnodes.Properties;
+import com.sendnodes.nodes.Node;
 
 public class EntityManager {
 	private HashMap<String, Texture> images;
@@ -51,8 +52,11 @@ public class EntityManager {
 	public void registerClick(int x, int y){
 		int xNode = (int) Math.floor(x/node_size[0]);
 		int yNode = (int) Math.floor(y/node_size[1]);
+		if(map.getMap()[x][y].getOwner()!=players.get(0) && map.isConnected(players.get(0), new Node(), map.getMap()[x][y])){
+			players.get(0).addTarget(new Attack(players.get(0), map.getMap()[x][y], 1));
+		}
 		
-		//players.get(0).addTarget(new Attack())
+		
 	}
 	
 }
