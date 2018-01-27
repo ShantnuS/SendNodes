@@ -9,7 +9,7 @@ import powerups.NodePowerUp;
 
 public class Node {
 	private ArrayList<Connection> connections;
-	private int hp;
+	private int hp = 2000;
 	private int shield;
 	private Player player;
 	private List<Node> latestPipePath;
@@ -44,12 +44,16 @@ public class Node {
 		return player;
 	}
 	
-	public void adjustHealth(int health, Player from) {
+	public boolean adjustHealth(int health, Player from) {
 		this.hp += health;
+		System.out.println("Health adjusted to " + this.hp);
 		if (hp<0) {
 			this.player = from;
 			hp = -hp;
+			System.out.print("Player destroyed");
+			return true;
 		}
+		return false;
 	}
 	
 	public void setHp(int hp) {
@@ -74,6 +78,10 @@ public class Node {
 	
 	public List<Node> getPathBuilder() {
 		return latestPipePath;
+	}
+	
+	public void setOwner(Player player){
+		this.player = player;
 	}
 	
 	public int getX(){
