@@ -1,8 +1,10 @@
 package com.sendnodes;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import com.sendnodes.entities.Player;
 import com.sendnodes.nodes.Connection;
@@ -110,31 +112,44 @@ public class Network {
 		return nodes.get(r.nextInt(nodes.size()));
 	}
 	
-	public boolean isConnected(Player player, Node node1, Node node2) {
-        List<Node> queue = new ArrayList<Node>();
+	public boolean isConnected(Player player, Node node1, Node target) {
+		
+		Set<Node> explored = new HashSet<Node>();
+        List<Node> exploreQueue = new ArrayList<Node>();
         
-        queue.add( node1 ); // start from here
+        exploreQueue.add( node1 ); // start from here
+        
         boolean pathExists = false;
         
-        while (!queue.isEmpty()) {
-            Node current = queue.remove(0);
+        while (!exploreQueue.isEmpty() && !pathExists) {
+        	// Get next item in queue and mark it as explored
+            Node current = exploreQueue.remove(0);
             
-            if (current == node2) {
-                pathExists = true;
-                break;
-            }
-            
-            for (Connection conn : current.getConnections()) {
-            	Node other = conn.getOtherNode(current);
-            	if (other.getOwner() == player) {
-            		other.getPathBuilder().addAll(current.getPathBuilder());
-            		other.getPathBuilder().add(current);
-            		queue.add(other);
-            	}
-            	else if (other == node2) {
-            		pathExists = true;
+            if (!explored.contains(current)){
+            	explored.add(current);
+            	
+            	// If our current node is our target to find, exit with success
+            	if (current == target) {
+                    pathExists = true;
                     break;
-            	}
+                }
+                
+            	// Go through each connected neighbour and add it to the exploration queue
+                for (Connection conn : current.getConnections()) {
+                	
+                	Node neighbour = conn.getOtherNode(current);
+                	
+                	// If the neighbour is ours, explore it
+                	if (neighbour.getOwner() == player) {
+                		neighbour.getPathBuilder().add(current);
+                		exploreQueue.add(neighbour);
+                	}
+                	// If it's the target, we found it!
+                	else if (neighbour == target) {
+                		pathExists = true;
+                        break;
+                	}
+                }
             }
         }
         
