@@ -1,6 +1,7 @@
 package com.sendnodes.nodes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.sendnodes.entities.Player;
 
@@ -9,9 +10,11 @@ public class Node {
 	private int hp;
 	private int shield;
 	private Player player;
+	private List<Node> latestPipePath;
 	
 	public Node(){
 		connections = new ArrayList<Connection>();
+		latestPipePath = new ArrayList<Node>();
 	}
 	
 	public int getHp() {
@@ -44,5 +47,9 @@ public class Node {
 	
 	public void removeConnection(Connection conn) {
 		connections.remove(conn);
+	}
+	
+	public List<Node> getPathBuilder() {
+		return latestPipePath;
 	}
 }
