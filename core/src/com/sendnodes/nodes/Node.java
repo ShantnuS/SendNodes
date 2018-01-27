@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.sendnodes.entities.Player;
 
+import powerups.NodePowerUp;
+
 public class Node {
 	private ArrayList<Connection> connections;
 	private int hp;
@@ -12,14 +14,26 @@ public class Node {
 	private Player player;
 	private List<Node> latestPipePath;
 	private int x,y;
+	private NodePowerUp powerup;
 	
 	public Node(int x, int y){
 		connections = new ArrayList<Connection>();
 		latestPipePath = new ArrayList<Node>();
+		
+		this.x = x;
+		this.y = y;
 	}
 	
 	public int getHp() {
 		return hp;
+	}
+	
+	public void setPowerUp(NodePowerUp powerup) {
+		this.powerup = powerup;
+	}
+	
+	public NodePowerUp getPowerUp() {
+		return this.powerup;
 	}
 	
 	public int getShield() {
@@ -36,6 +50,14 @@ public class Node {
 			this.player = from;
 			hp = -hp;
 		}
+	}
+	
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+	
+	public void setShield(int shield) {
+		this.shield = shield;
 	}
 	
 	public ArrayList<Connection> getConnections() {

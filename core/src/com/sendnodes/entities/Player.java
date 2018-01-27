@@ -14,6 +14,7 @@ public class Player {
 	public Player(Node startNode){
 		startingNode = startNode;
 		targets = new ArrayList<Attack>();
+		System.out.println("x:"+startingNode.getX()+" y:"+startingNode.getY());
 	}
 	
 	public boolean addTarget(Attack attack) {
