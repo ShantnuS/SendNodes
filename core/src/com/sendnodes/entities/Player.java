@@ -9,10 +9,10 @@ public class Player {
 	private Node startingNode;
 	private int ip;
 	
-	private ArrayList<Node> targets;
+	private ArrayList<Attack> targets;
 	
-	public boolean addTarget(Node node) {
-		targets.add(node);
+	public boolean addTarget(Attack attack) {
+		targets.add(attack);
 		return true;
 	}
 	
@@ -22,16 +22,20 @@ public class Player {
 	}
 	
 	public void update(){
-		for (Node target:getTargets()) {
+		attackTargets();
+	}
+	
+	private void attackTargets(){
+		for (Attack target:getTargets()) {
 			//--PLACE HOLDER-- ATTACKS NEED OWN OBJECT TO GET THIS VALUE
-			int amountToDamageTarget = 2;
-			for(Connection conn:target.getConnections()) {
-				if(conn.getOtherNode(target).getOwner() == this) {
+			int amountToDamageTarget = target.getDamage();
+			for(Connection conn:target.getTarget().getConnections()) {
+				if(conn.getOtherNode(target.getTarget()).getOwner() == this) {
 					if(amountToDamageTarget<=conn.getBandwidth()) {
-						target.adjustHealth(amountToDamageTarget, this);
+						target.getTarget().adjustHealth(amountToDamageTarget, this);
 						amountToDamageTarget-=amountToDamageTarget;
 					}else {
-						target.adjustHealth(conn.getBandwidth(), this);
+						target.getTarget().adjustHealth(conn.getBandwidth(), this);
 						amountToDamageTarget-=conn.getBandwidth();
 					}					
 				}
@@ -40,7 +44,7 @@ public class Player {
 	}
 	
 	
-	public ArrayList<Node> getTargets(){
+	public ArrayList<Attack> getTargets(){
 		return targets;
 	}
 }
