@@ -14,11 +14,7 @@ public class GameController {
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}
-
-	public SoundManager getSoundManager() {
-		return soundManager;
-	}
-
+	
 	public UIManager getUiManager() {
 		return uiManager;
 	}
@@ -27,7 +23,7 @@ public class GameController {
 	private SoundManager soundManager;
 	private UIManager uiManager;
 	
-	public static final GameController instance = new GameController(Properties.DEFAULT_MAP_SIZE);
+	private static final GameController instance = new GameController(Properties.DEFAULT_MAP_SIZE);
 	
 	public GameController(int map_size) {
 		entityManager = new EntityManager(map_size);
@@ -47,5 +43,9 @@ public class GameController {
 	
 	public void render(SpriteBatch batch){
 		entityManager.render(batch);
+	}
+	
+	public SoundManager getSoundManager(){
+		return soundManager;
 	}
 }
