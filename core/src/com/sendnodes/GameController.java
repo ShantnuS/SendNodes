@@ -6,9 +6,8 @@ import com.sendnodes.entities.EntityManager;
 public class GameController {
 	
 	private EntityManager entityManager;
-	private final int map_size = 20;
 	
-	public GameController() {
+	public GameController(int map_size) {
 		entityManager = new EntityManager(map_size);
 	}
 	

@@ -15,7 +15,7 @@ public class Core extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
-		controller = new GameController();
+		controller = new GameController(20);
 	}
 
 	@Override
