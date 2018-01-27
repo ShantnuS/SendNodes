@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import soundengine.MusicManager;
+
 public class Core extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private GameController controller;
@@ -14,7 +16,6 @@ public class Core extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		controller = new GameController(10);
-
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sendnodes.entities.EntityManager;
 import com.sendnodes.ui.UIManager;
 
+import soundengine.MusicManager;
 import soundengine.SoundManager;
 
 public class GameController {
@@ -21,6 +22,7 @@ public class GameController {
 
 
 	private SoundManager soundManager;
+	private MusicManager musicManager;
 	private UIManager uiManager;
 	
 	private static final GameController instance = new GameController(Properties.DEFAULT_MAP_SIZE);
@@ -29,6 +31,7 @@ public class GameController {
 		entityManager = new EntityManager(map_size);
 		soundManager = new SoundManager();
 		uiManager = new UIManager(entityManager);
+		musicManager = new MusicManager();
 	}
 	
 	public static GameController getInstance() {
@@ -39,7 +42,7 @@ public class GameController {
 		entityManager.update();
 		uiManager.update();
 	}
-	
+	 
 	
 	public void render(SpriteBatch batch){
 		entityManager.render(batch);
@@ -47,5 +50,8 @@ public class GameController {
 	
 	public SoundManager getSoundManager(){
 		return soundManager;
+	}
+	public MusicManager getMusicManager(){
+		return musicManager;
 	}
 }
