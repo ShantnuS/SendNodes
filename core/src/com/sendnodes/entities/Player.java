@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.sendnodes.Network;
+import com.sendnodes.Statistics;
 import com.sendnodes.nodes.Connection;
 import com.sendnodes.nodes.Node;
 
@@ -22,16 +23,22 @@ public class Player {
 	private ArrayList<Node> ownedNodes = new ArrayList<Node>();
 	
 	private String playerTextureName, nodeTextureName;
+	
+	Statistics stats;
 
 	public Player(Node startNode, String playerTextureName, String nodeTextureName) {
 		startingNode = startNode;
 		ownedNodes.add(startNode);
 		attacks = new ArrayList<Attack>();
 		powerups = new ArrayList<PlayerPowerUp>();
-		System.out.println("x:" + startingNode.getXPos() + " y:" + startingNode.getYPos());
 		
 		this.playerTextureName = playerTextureName;
 		this.nodeTextureName = nodeTextureName;
+		stats = new Statistics();
+	}
+	
+	public Statistics getStats() {
+		return stats;
 	}
 	
 	public void toggleShield(){
@@ -47,6 +54,7 @@ public class Player {
 	}
 	
 	public void gainedNode(Node node){
+		System.out.println("Add owned node");
 		ownedNodes.add(node);
 	}
 	
@@ -102,8 +110,6 @@ public class Player {
 				break;
 			}
 			
-			System.out.println("test2");
-
 			// Go through every connection to the target
 			for (Connection conn: attack.getTarget().getConnections()) {
 
@@ -113,7 +119,7 @@ public class Player {
 				}
 
 				// Check if this node is part of our attack or some other node
-				if (conn.getOtherNode(attack.getTarget()).getOwner() == this) {
+				if (conn.getOtherNode(attack.getTarget()).getOwner() == this && Network.isConnected(this, startingNode, conn.getOtherNode(attack.getTarget()))) {
 					Player victim = attack.getTarget().getOwner();
 					// Do all damage possible
 					System.out.println(maxPossibleDamage);

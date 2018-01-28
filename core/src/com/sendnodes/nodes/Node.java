@@ -83,17 +83,10 @@ public class Node {
 		if (player==null || !(player.getShieldStatus() == true && health < 0)) {
 			this.hp += health;
 			if (hp < 0) {
-				Player oldPlayer = this.getOwner();
-				if (this.getOwner() != null) {
-					this.getOwner().lostNode(this);
-				}
 				this.setOwner(from);
 				if (loot > 0) {
 					from.giveLoot(loot);
 					loot = 0;
-				}
-				if (from != null) {
-					from.gainedNode(this);
 				}
 				hp = -hp;
 				hp = (int) (hp * 1.0 / 2);

@@ -42,8 +42,6 @@ public class AttackDialogue {
 	}
 	
 	public void render(SpriteBatch batch, Texture texture){
-		System.out.println(x + " + " + y);
-		System.out.println("x" + texture.getWidth());
 		batch.draw(texture, x, y, 0.5f, 0.5f);
 	}
 }
