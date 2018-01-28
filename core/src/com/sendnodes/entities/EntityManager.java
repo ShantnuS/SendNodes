@@ -158,15 +158,10 @@ public class EntityManager {
 			}
 		}
 
-//		System.out.println("first loop");
-//		for (Player p : players) {
-//			System.out.println(p.getPlayerTextureName());
-//			batch.draw(images.get(p.getPlayerTextureName()), (p.getX() * node_size[0])-(tile_size/2), (p.getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
-//		}
-	
-		batch.draw(images.get("node_player_blue"), (players.get(0).getX() * node_size[0])-(tile_size/2), (players.get(0).getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
-		batch.draw(images.get("node_player_red"), (players.get(1).getX() * node_size[0])-(tile_size/2), (players.get(1).getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
-		
+		for (Player p : players) {
+			System.out.println(p.getPlayerTextureName());
+			batch.draw(images.get(p.getPlayerTextureName()), (p.getX() * node_size[0])-(tile_size/2), (p.getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
+		}
 		
 		
 		batch.flush();
@@ -207,15 +202,12 @@ public class EntityManager {
 			if (map.getMap()[xNode][yNode].getOwner() != players.get(0) 
 					&& map.isConnected(players.get(0), players.get(0).getNode(), map.getMap()[xNode][yNode])) {
 				
-				GameController.getInstance().UI().showDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1]);
-				clickedOnATarget = true;
+
+				GameController.getInstance().UI().showDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1],
+						map.getMap()[xNode][yNode], node_size[0], node_size[1], players.get(0));
 				
-				attackDialogue = new AttackDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1]);
-				Attack attack = new Attack(players.get(0), map.getMap()[xNode][yNode], -1);
-				if (!Attack.alreadyExists(players.get(0).getTargets(), attack)) {
-					System.out.println("3");
-					players.get(0).addTarget(attack);
-				}
+				//GameController.getInstance().UI().showDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1]);
+				clickedOnATarget = true;
 			}
 		}
 		
