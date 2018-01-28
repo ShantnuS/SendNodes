@@ -1,5 +1,7 @@
 package com.sendnodes;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sendnodes.entities.EntityManager;
 import com.sendnodes.ui.UIManager;
@@ -11,7 +13,7 @@ public class GameController {
 	
 	private EntityManager entityManager;
 	private MenuScreen menuScreen;
-	private int screenNumber; 
+	public int screenNumber; 
 	
 	//ALL THE GETTERS!
 	public EntityManager EM() {
@@ -42,6 +44,8 @@ public class GameController {
 		uiManager = new UIManager();
 		stats = new Statistics();
 		screenNumber = 0;
+		
+		
 	}
 	
 	public void setScreenNumber(int num) {
@@ -58,8 +62,18 @@ public class GameController {
 	}
 	
 	public void update() {
-		uiManager.update();
-		entityManager.update();
+		System.out.println(Gdx.input.isKeyPressed(Input.Keys.ESCAPE));
+		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+			screenNumber = 0;
+		}
+	
+		switch(screenNumber){
+		case 1:
+			uiManager.update();
+			entityManager.update();
+			break;
+		}
+
 	}
 	
 	

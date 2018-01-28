@@ -80,7 +80,7 @@ public class Node {
 	}
 
 	public boolean adjustHealth(int health, Player from) {
-		if (!(player.getShieldStatus() == true && health < 0)) {
+		if (player==null || !(player.getShieldStatus() == true && health < 0)) {
 			this.hp += health;
 			if (hp < 0) {
 				Player oldPlayer = this.getOwner();
