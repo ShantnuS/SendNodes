@@ -11,8 +11,11 @@ import powerups.PlayerPowerUp;
 
 public class Player {
 	private Node startingNode;
+	private boolean shield = false;
 	private int initial_ip = 5;
 	private int current_ip = 5;
+	private int loot = 0;
+	private int passiveLootGen = 0;
 
 	private ArrayList<Attack> attacks;
 	private ArrayList<PlayerPowerUp> powerups;
@@ -31,8 +34,24 @@ public class Player {
 		this.nodeTextureName = nodeTextureName;
 	}
 	
+	public void toggleShield(){
+		shield  = !shield;
+	}
+	
+	public void increasePassiveLootGen(int amount){
+		passiveLootGen += amount;
+	}
+	
+	public boolean getShieldStatus(){
+		return shield;
+	}
+	
 	public void gainedNode(Node node){
 		ownedNodes.add(node);
+	}
+	
+	public void giveLoot(int loot){
+		this.loot += loot;
 	}
 	
 	public void lostNode(Node node){
@@ -68,6 +87,8 @@ public class Player {
 
 	// TODO: Prioritise attacks??
 	private void attackTargets() {
+		loot+=passiveLootGen;
+		
 		int remainingIp = initial_ip;
 		ArrayList<Player> killedVictims = new ArrayList<Player>();
 		ArrayList<Attack> attacksToRemove = new ArrayList<Attack>();
