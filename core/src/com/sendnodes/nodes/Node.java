@@ -15,13 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.sendnodes.GameController;
 import com.sendnodes.entities.Player;
 
 import powerups.NodePowerUp;
 
 public class Node {
 	private ArrayList<Connection> connections;
-	private int hp = new Random().nextInt(45)+5;
+	private int hp = new Random().nextInt(45) + 5;
 	private int shield;
 	private Player player;
 	private List<Node> latestPipePath;
@@ -64,13 +65,13 @@ public class Node {
 	public boolean adjustHealth(int health, Player from) {
 		this.hp += health;
 		if (hp < 0) {
-			Player oldPlayer = this.player;
-			this.player = from;
-			if (this.player != null) {
-				this.player.recalculateInfluence();
+			Player oldPlayer = this.getOwner();
+			if (this.getOwner() != null) {
+				this.getOwner().lostNode(this);
 			}
-			if (oldPlayer != null) {
-				oldPlayer.recalculateInfluence();
+			this.setOwner(from);
+			if (from != null) {
+				from.gainedNode(this);
 			}
 			hp = -hp;
 			return true;
@@ -103,7 +104,17 @@ public class Node {
 	}
 
 	public void setOwner(Player player) {
+		Player olderPlayer = this.getOwner();
 		this.player = player;
+
+		if (olderPlayer != null) {
+			olderPlayer.lostNode(this);
+			olderPlayer.recalculateNodeData();
+		}
+		if (this.player != null) {
+			this.player.gainedNode(this);
+			this.player.recalculateNodeData();
+		}
 	}
 
 	public int getXPos() {

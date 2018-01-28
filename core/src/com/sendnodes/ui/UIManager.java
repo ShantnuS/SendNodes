@@ -103,7 +103,6 @@ public class UIManager {
         dialogueContainer.addButton(tb);
         dialogueContainer.resizeActors(false);
 	}
-	
 	public void update(){
 		if(!Gdx.input.isButtonPressed(Input.Buttons.LEFT) && clickedDownLeft == true){
 			int x = Gdx.input.getX();

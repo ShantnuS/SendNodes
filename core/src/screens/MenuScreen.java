@@ -13,11 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.sendnodes.GameController;
 import com.sendnodes.Properties;
 import com.sendnodes.ui.ButtonMaker;
-import com.sendnodes.ui.Container;
+import com.sendnodes.ui.ButtonContainer;
 
 public class MenuScreen {	
     Stage stage;   
-    Container container;
+    ButtonContainer container;
 	
 	public MenuScreen() {
 		stage = new Stage();
@@ -25,7 +25,7 @@ public class MenuScreen {
 	}
 	
 	public void create() {
-        container = new Container(Properties.SCREEN_WIDTH/2-100,Properties.SCREEN_HEIGHT* 3/4,200,Properties.SCREEN_HEIGHT/2,200,100);
+        container = new ButtonContainer(Properties.SCREEN_WIDTH/2-100,Properties.SCREEN_HEIGHT* 3/4,200,Properties.SCREEN_HEIGHT/2,200,100);
      
         TextButton tb = ButtonMaker.getBasicButton("Play");
         tb.addListener(new ChangeListener() {
@@ -54,7 +54,46 @@ public class MenuScreen {
         });   
         container.addButton(tb);
         
-        container.resizeActors(false);
+        container.resizeActors();
+        
+/*		uiContainer = new UIContainer(Properties.SCREEN_WIDTH/2-100,Properties.SCREEN_HEIGHT* 3/4);
+		
+        container = new ButtonContainer(0,Properties.SCREEN_HEIGHT,200,Properties.SCREEN_HEIGHT/2,200,100);
+        
+        TextButton tb = ButtonMaker.getBasicButton("Play");
+        tb.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	GameController.getInstance().setScreenNumber(1);
+            }
+        });   
+        container.addButton(tb);        
+        
+        tb = ButtonMaker.getBasicButton("Settings");
+        tb.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	//GameController.getInstance().setScreenNumber(1);
+            }
+        });   
+        container.addButton(tb);
+        
+        tb = ButtonMaker.getBasicButton("Exit");
+        tb.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	System.exit(0);
+            }
+        });   
+        container.addButton(tb);
+        //container.resizeActors();
+        
+        incrementor = new Incrementor(0,Properties.SCREEN_HEIGHT/2,200,100, inc);
+        
+        uiContainer.addContainer(incrementor);
+        uiContainer.addContainer(container);
+        
+        uiContainer.resizeActors();*/
 	}
 
 	

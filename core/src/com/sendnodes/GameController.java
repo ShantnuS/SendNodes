@@ -32,9 +32,10 @@ public class GameController {
 		return stats;
 	}
 
-	private static GameController instance = new GameController(Properties.DEFAULT_MAP_SIZE);
+	public static final GameController instance = new GameController(Properties.DEFAULT_MAP_SIZE);
 	
 	public GameController(int map_size) {
+		System.out.println("initialising");
 		entityManager = new EntityManager(map_size);
 		menuScreen = new MenuScreen();
 		soundManager = new SoundManager();
@@ -48,6 +49,7 @@ public class GameController {
 	}
 	
 	public static GameController getInstance() {
+		System.out.println("getting");
 		return instance;
 	}
 	
