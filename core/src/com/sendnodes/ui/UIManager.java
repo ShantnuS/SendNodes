@@ -17,6 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.sendnodes.GameController;
 import com.sendnodes.Properties;
+import com.sendnodes.entities.Attack;
+import com.sendnodes.entities.Player;
+import com.sendnodes.nodes.Node;
 
 import soundengine.SoundManager;
 
@@ -115,34 +118,40 @@ public class UIManager {
         dialogueSliderContainer.addButton(s2);   
 		
 		
-		dialogueContainer = new Container(-400,-400,200,100, stage);
+		dialogueContainer = new Container(-200,-200,50,50, stage);
 	     
-        TextButton tb = ButtonMaker.getBasicButton("Play");
+        TextButton tb = ButtonMaker.getTexturedButton("", "PU_node_attack", "PU_node_attack");
         tb.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-            	System.out.println("winning");
-            	GameController.getInstance().setScreenNumber(1);
+            	//attackDialogue = new AttackDialogue(attackDialogue.getQuery().getXPos() * attackDialogue.getNodeWidth(), 
+            	//		attackDialogue.getQuery().getYPos() * attackDialogue.getNodeHeight());
+            	
+            	System.out.println(attackDialogue.getPlayer());
+            	System.out.println(attackDialogue.getQuery());
+				Attack attack = new Attack(attackDialogue.getPlayer(), attackDialogue.getQuery(), -1);
+				if (!Attack.alreadyExists(attackDialogue.getPlayer().getTargets(), attack)) {
+					System.out.println("3");
+					attackDialogue.getPlayer().addTarget(attack);
+				}
             }
         });   
         dialogueContainer.addButton(tb);        
         
-        tb = ButtonMaker.getBasicButton("Settings");
+        tb = ButtonMaker.getTexturedButton("", "PU_node_defence", "PU_node_defence");
         tb.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-            	System.out.println("winning");
-            	//GameController.getInstance().setScreenNumber(1);
+            	
             }
         });   
         dialogueContainer.addButton(tb);
         
-        tb = ButtonMaker.getBasicButton("Exit");
+        tb = ButtonMaker.getTexturedButton("", "PU_node_interference", "PU_node_interference");
         tb.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-            	System.out.println("winning");
-            	System.exit(0);
+            	
             }
         });   
         dialogueContainer.addButton(tb);
@@ -187,10 +196,12 @@ public class UIManager {
 		stage.draw();
 	}
 	
-	public void showDialogue(int x, int y){
+	public void showDialogue(int x, int y, Node n, int nodeWidth, int nodeHeight, Player p){
 		System.out.println("tre");
 		dialogueContainer.move(x, y-100, true);
 		dialogueSliderContainer.move(x, y-200, true);
+		
+		attackDialogue.setQuery(n, nodeWidth, nodeHeight, p);
 		
 		//attackDialogue.setPos(-1, -1);
 		showAttackDialogue = true;

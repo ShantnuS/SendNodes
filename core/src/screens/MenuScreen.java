@@ -1,5 +1,7 @@
 package screens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,9 +20,11 @@ import com.sendnodes.ui.ButtonContainer;
 public class MenuScreen {	
     Stage stage;   
     ButtonContainer container;
+    private ArrayList<TextButton> buttons;
 	
 	public MenuScreen(Stage stage) {
 		this.stage = stage;
+		this.buttons = new ArrayList<TextButton>();
 	}
 
 	public void create() {
@@ -33,10 +37,15 @@ public class MenuScreen {
 			public void changed(ChangeEvent event, Actor actor) {
 				if (GameController.getInstance().screenNumber == 0) {
 					GameController.getInstance().setScreenNumber(1);
+					
+					buttons.get(0).setVisible(false);
+					buttons.get(1).setVisible(false);
+					buttons.get(2).setVisible(false);
 				}
 			}
 		});
 		container.addButton(tb);
+		buttons.add(tb);
 
 		tb = ButtonMaker.getBasicButton("Settings");
 		tb.addListener(new ChangeListener() {
@@ -48,6 +57,7 @@ public class MenuScreen {
 			}
 		});
 		container.addButton(tb);
+		buttons.add(tb);
 
 		tb = ButtonMaker.getBasicButton("Exit");
 		tb.addListener(new ChangeListener() {
@@ -59,6 +69,7 @@ public class MenuScreen {
 			}
 		});
 		container.addButton(tb);
+		buttons.add(tb);
 
 		container.resizeActors();
 

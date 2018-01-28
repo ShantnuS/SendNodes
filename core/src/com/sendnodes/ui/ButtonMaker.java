@@ -42,6 +42,34 @@ public class ButtonMaker {
 		return button;
 	}
 	
+	public static TextButton getTexturedButton(final String text, final String upIcon, final String downIcon) {
+		
+		TextButtonStyle textButtonStyle;
+		BitmapFont font;
+		Skin skin;
+		TextureAtlas buttonAtlas;
+
+		font = new BitmapFont();
+		skin = new Skin();
+		buttonAtlas = new TextureAtlas(Gdx.files.internal("powerup.atlas"));
+		skin.addRegions(buttonAtlas);
+		textButtonStyle = new TextButtonStyle();
+		textButtonStyle.font = font;
+		textButtonStyle.up = skin.getDrawable(upIcon);
+		textButtonStyle.down = skin.getDrawable(downIcon);
+
+		TextButton button = new TextButton(text, textButtonStyle);
+
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                System.out.println("Button Pressed " + text);
+            }
+        });    
+		
+		return button;
+	}
+	
 	public static TextButton getLabel(final String text) {
 		
 		TextButtonStyle textButtonStyle;
