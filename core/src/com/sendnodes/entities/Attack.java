@@ -27,6 +27,14 @@ public class Attack {
 		return target;
 	}
 	
+	public void incrementDamage(){
+		damageAmount--;
+	}
+	
+	public void decrementDamage(){
+		damageAmount++;
+	}
+	
 	public static boolean alreadyExists(ArrayList<Attack> attacks, Attack attack){
 		for(Attack alreadyAttacking:attacks){
 			if(alreadyAttacking.getTarget() == attack.getTarget() && alreadyAttacking.getAttacker()==attack.getAttacker()){

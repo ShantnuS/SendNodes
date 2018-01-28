@@ -19,6 +19,7 @@ public class Player {
 	private int passiveLootGen = 0;
 
 	private ArrayList<Attack> attacks;
+	private ArrayList<Attack> defences;
 	private ArrayList<PlayerPowerUp> powerups;
 	private ArrayList<Node> ownedNodes = new ArrayList<Node>();
 	
@@ -30,6 +31,7 @@ public class Player {
 		startingNode = startNode;
 		ownedNodes.add(startNode);
 		attacks = new ArrayList<Attack>();
+		defences = new ArrayList<Attack>();
 		powerups = new ArrayList<PlayerPowerUp>();
 		
 		this.playerTextureName = playerTextureName;
@@ -81,7 +83,11 @@ public class Player {
 	}
 
 	public void update() {
-		attackTargets();
+	//	attackTargets(attacks);
+	//	defendTargets(defences);
+		
+		applyCPUToTargets(defences);
+		applyCPUToTargets(attacks);
 	}
 
 	public void recalculateNodeData() {
@@ -94,7 +100,7 @@ public class Player {
 	}
 
 	// TODO: Prioritise attacks??
-	private void attackTargets() {
+	private void applyCPUToTargets(ArrayList<Attack> targets) {
 		loot+=passiveLootGen;
 		
 		int remainingIp = initial_ip;
@@ -102,7 +108,7 @@ public class Player {
 		ArrayList<Attack> attacksToRemove = new ArrayList<Attack>();
 
 		// Go through every target
-		for (Attack attack : getTargets()) {
+		for (Attack attack : targets) {
 
 			// Get wanted damage for this attack on the target
 			int maxPossibleDamage = attack.getDamage();
@@ -114,8 +120,8 @@ public class Player {
 			for (Connection conn: attack.getTarget().getConnections()) {
 
 				// Cap damage if over AD points
-				if (maxPossibleDamage > remainingIp) {
-					maxPossibleDamage = remainingIp;
+				if (Math.abs(maxPossibleDamage) > remainingIp) {
+					maxPossibleDamage = Integer.signum(maxPossibleDamage) * remainingIp;
 				}
 
 				// Check if this node is part of our attack or some other node

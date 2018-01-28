@@ -107,6 +107,12 @@ public class MenuScreen {
 		 * uiContainer.resizeActors();
 		 */
 	}
+	
+	public void show(){
+		buttons.get(0).setVisible(true);
+		buttons.get(1).setVisible(true);
+		buttons.get(2).setVisible(true);
+	}
 
 	public void render(SpriteBatch batch) {
 		batch.end();

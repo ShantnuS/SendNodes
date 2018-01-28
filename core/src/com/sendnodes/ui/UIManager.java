@@ -1,5 +1,7 @@
 package com.sendnodes.ui;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -98,12 +100,18 @@ public class UIManager {
 		dialogueGridContainer = new GridContainer();
 		
 
+		
 		dialogueSliderContainer = new Container(-400,-400,200,100, stage);
 		TextButton s1 = ButtonMaker.getBasicButton("Up");
         s1.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-            	GameController.getInstance().setScreenNumber(1);
+            	ArrayList<Attack> attacks = attackDialogue.getPlayer().getTargets();
+            	
+            	// for each attack, see if the target node is the attack's target, if so, increment that attack's damage
+            	for (Attack a:attacks)
+            		if (a.getTarget() == attackDialogue.getQuery())
+            			a.incrementDamage();
             }
         });   
         dialogueSliderContainer.addButton(s1);   
@@ -118,22 +126,18 @@ public class UIManager {
         dialogueSliderContainer.addButton(s2);   
 		
 		
+        
 		dialogueContainer = new Container(-200,-200,50,50, stage);
 	     
+		// Clicking the attack triggers an expenditure of resources on the target node
         TextButton tb = ButtonMaker.getTexturedButton("", "PU_node_attack", "PU_node_attack");
         tb.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-            	//attackDialogue = new AttackDialogue(attackDialogue.getQuery().getXPos() * attackDialogue.getNodeWidth(), 
-            	//		attackDialogue.getQuery().getYPos() * attackDialogue.getNodeHeight());
-            	
-            	System.out.println(attackDialogue.getPlayer());
-            	System.out.println(attackDialogue.getQuery());
 				Attack attack = new Attack(attackDialogue.getPlayer(), attackDialogue.getQuery(), -1);
-				if (!Attack.alreadyExists(attackDialogue.getPlayer().getTargets(), attack)) {
-					System.out.println("3");
+				
+				if (!Attack.alreadyExists(attackDialogue.getPlayer().getTargets(), attack))
 					attackDialogue.getPlayer().addTarget(attack);
-				}
             }
         });   
         dialogueContainer.addButton(tb);        
@@ -179,7 +183,7 @@ public class UIManager {
 			int x = Gdx.input.getX();
 			int y = Gdx.input.getY();
 			
-			GameController.getInstance().EM().registerRightClick(x, y);
+			//GameController.getInstance().EM().registerRightClick(x, y);
 			
 			GameController.getInstance().getSoundManager().playSound(SoundManager.SOUNDS.CLICK.ordinal());
 		}
@@ -197,6 +201,12 @@ public class UIManager {
 	}
 	
 	public void showDialogue(int x, int y, Node n, int nodeWidth, int nodeHeight, Player p){
+		
+		if (x<100)
+			x = 100;
+		if (y<250)
+			y = 250;
+		
 		System.out.println("tre");
 		dialogueContainer.move(x, y-100, true);
 		dialogueSliderContainer.move(x, y-200, true);
