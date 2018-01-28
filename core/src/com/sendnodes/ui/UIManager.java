@@ -51,8 +51,9 @@ public class UIManager {
 	public UIManager(Stage stage){
 		this.stage = stage;
 		
+		gridContainer = new GridContainer();
 		initialiseAttackDialogue();
-		initialiseSideDialogue();
+		//initialiseSideDialogue();
 		
 		initTargetList();
 		// initialising
@@ -108,32 +109,40 @@ public class UIManager {
 	}
 	
 	public void initialiseSideDialogue(){
-		gridContainer = new GridContainer();
+		//gridContainer = new GridContainer();
 
-		container2 = new Container(Properties.SCREEN_WIDTH-200,Properties.SCREEN_HEIGHT-400, 100, 100, stage);
-		TextButton s1 = ButtonMaker.getTexturedButton("", "PU_node_defence", "PU_node_defence");
-        s1.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {}
-        });     
-        
-        TextButton s2 = ButtonMaker.getBasicButton("Show");
-        s2.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {}
-        });     
-        
-        TextButton s3 = ButtonMaker.getBasicButton("X");
-        s2.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {}
-        });   
-        container2.addButton(s3); 
-        container2.addButton(s2); 
-        container2.addButton(s1); 
-        container2.resizeActors(true);
+		for(final Attack a : GameController.getInstance().EM().getPlayer1().getTargets())
+		{
+			Node target = a.getTarget();
+			container2 = new Container(Properties.SCREEN_WIDTH-200,Properties.SCREEN_HEIGHT-400, 100, 100, stage);
+			TextButton s1 = ButtonMaker.getTexturedButton("", "PU_node_defence", "PU_node_defence");
+	        s1.addListener(new ChangeListener() {
+	            @Override
+	            public void changed (ChangeEvent event, Actor actor) {}
+	        });     
+	        
+	        TextButton s2 = ButtonMaker.getBasicButton("Show");
+	        s2.addListener(new ChangeListener() {
+	            @Override
+	            public void changed (ChangeEvent event, Actor actor) {}
+	        });     
+	        
+	        TextButton s3 = ButtonMaker.getBasicButton("X");
+	        s2.addListener(new ChangeListener() {
+	            @Override
+	            public void changed (ChangeEvent event, Actor actor) {}
+	        });   
+	        container2.addButton(s3);
+	        container2.addButton(s2); 
+	        container2.addButton(s1);
+	        container2.resizeActors(true);
+	        
+	        gridContainer.addContainer(container2);
+	        System.out.println("hello");
+		}
+		gridContainer.resizeActors(false);
 		
-        container1 = new Container(600,200,50,50, stage);
+		/*container1 = new Container(600,200,50,50, stage);
 	     
 		// Clicking the attack triggers an expenditure of resources on the target node
         TextButton tb = ButtonMaker.getTexturedButton("", "PU_node_attack", "PU_node_attack");
@@ -158,8 +167,7 @@ public class UIManager {
         container1.addButton(tb);
         container1.resizeActors(true);
 
-        gridContainer.addContainer(container1);
-        gridContainer.addContainer(container2);
+        gridContainer.addContainer(container2);*/
 	}
 	
 	public void initialiseAttackDialogue(){
@@ -202,6 +210,7 @@ public class UIManager {
 				{
 					attackDialogue.getPlayer().addTarget(attack);
 					GameController.getInstance().getSoundManager().playSound(SoundManager.SOUNDS.EXCHANGE.ordinal());
+					
 				}
             }
         });   
@@ -211,7 +220,14 @@ public class UIManager {
         tb.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-            	
+        		Attack defence = new Attack(attackDialogue.getPlayer(), attackDialogue.getQuery(), +1);
+				
+				if (!Attack.alreadyExists(attackDialogue.getPlayer().getTargets(), defence))
+				{
+					attackDialogue.getPlayer().addTarget(defence);
+					GameController.getInstance().getSoundManager().playSound(SoundManager.SOUNDS.EXCHANGE.ordinal());
+					
+				}
             }
         });   
         dialogueContainer.addButton(tb);

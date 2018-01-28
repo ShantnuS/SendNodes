@@ -51,6 +51,7 @@ public class GridContainer {
 	}
 	
 	public void render(SpriteBatch batch){
+		System.out.println("lal" + containers.size());
 		for (Container c:containers){
 
 			c.render(batch);
