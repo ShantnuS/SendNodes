@@ -2,10 +2,12 @@ package com.sendnodes;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import com.sendnodes.entities.Attack;
 import com.sendnodes.entities.Player;
 import com.sendnodes.nodes.Connection;
 import com.sendnodes.nodes.Node;
@@ -38,6 +40,44 @@ public class Network {
 			j++;
 		}
 		return null;
+	}
+	
+	public static ArrayList<Attack> pruneAttacks(Player player, ArrayList<Attack> attacks){
+		Set<Node> explored = new HashSet<Node>();
+		List<Node> exploreQueue = new ArrayList<Node>();
+
+		exploreQueue.add(player.getNode()); // start from here
+
+
+		while (!exploreQueue.isEmpty()) {
+			// Get next item in queue and mark it as explored
+			Node current = exploreQueue.remove(0);
+
+			if (!explored.contains(current)) {
+				explored.add(current);
+
+				// Go through each connected neighbour and add it to the
+				// exploration queue
+				for (Connection conn : current.getConnections()) {
+
+					Node neighbour = conn.getOtherNode(current);
+
+					// If the neighbour is ours, explore it
+					if (neighbour.getOwner() == player) {
+						neighbour.getPathBuilder().add(current);
+						exploreQueue.add(neighbour);
+					}
+				}
+			}
+		}
+		Iterator<Attack> iter = attacks.iterator();
+		while (iter.hasNext()){
+			Attack attack = iter.next();
+			if(!explored.contains(attack.getTarget())){
+				iter.remove();
+			}
+		}
+		return attacks;
 	}
 	
 	public static int calculateInfluence(Player player){

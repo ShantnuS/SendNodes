@@ -2,6 +2,7 @@ package com.sendnodes.entities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.sendnodes.Network;
 import com.sendnodes.Properties;
+import com.sendnodes.ai.PlayerAI;
 import com.sendnodes.nodes.Connection;
 import com.sendnodes.nodes.Node;
 
@@ -35,7 +37,6 @@ public class EntityManager {
 	private double timeSinceAttack = 0;
 
 	private ArrayList<Label> labels;
-
 	private ShapeRenderer sr;
 
 	Stage stage;
@@ -78,15 +79,16 @@ public class EntityManager {
 		
 		players.add(new Player(map.getRandomNode()));
 		players.get(1).getNode().setOwner(players.get(1));
-
+		
 		tile_size = images.get("node_blue").getWidth() * Properties.GRAPHICS_SCALE;
 
 		sr = new ShapeRenderer();
 	}
 
 	public void update() {
+		PlayerAI.AIMove(players.get(1));
 		timeSinceAttack += Gdx.graphics.getDeltaTime();
-		if (timeSinceAttack >= 0.5) {
+		if (timeSinceAttack >= 0.2) {
 			for (Player player : players) {
 				player.update();
 			}
