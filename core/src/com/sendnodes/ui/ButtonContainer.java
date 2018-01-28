@@ -22,10 +22,9 @@ public class ButtonContainer extends UIObject{
 	int bSizeY;
 	boolean isLandscape =false;
 	
-	public ButtonContainer(int posX, int posY, int sizeX, int sizeY, int bSizeX, int bSizeY) {
+	public ButtonContainer(int posX, int posY, int sizeX, int sizeY, int bSizeX, int bSizeY, Stage stage) {
 		buttons = new ArrayList<TextButton>();
-		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);
+		this.stage = stage;
 		this.posX = posX;
 		this.posY = posY;
 		this.sizeX = sizeX;

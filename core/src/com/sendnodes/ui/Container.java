@@ -21,10 +21,9 @@ public class Container {
 	int bSizeX;
 	int bSizeY;
 	
-	public Container(int posX, int posY, int bSizeX, int bSizeY) {
+	public Container(int posX, int posY, int bSizeX, int bSizeY, Stage stage) {
 		buttons = new ArrayList<TextButton>();
-		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);
+		this.stage = stage;
 		this.posX = posX;
 		this.posY = posY;
 		this.bSizeX = bSizeX;
