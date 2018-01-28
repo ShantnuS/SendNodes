@@ -39,6 +39,40 @@ public class Network {
 		}
 		return null;
 	}
+	
+	public static int calculateInfluence(Player player){
+		int influence = 0;
+		Set<Node> explored = new HashSet<Node>();
+		List<Node> exploreQueue = new ArrayList<Node>();
+
+		exploreQueue.add(player.getNode()); // start from here
+
+
+		while (!exploreQueue.isEmpty()) {
+			// Get next item in queue and mark it as explored
+			Node current = exploreQueue.remove(0);
+
+			if (!explored.contains(current)) {
+				explored.add(current);
+				influence += current.getIpBoost();
+
+				// Go through each connected neighbour and add it to the
+				// exploration queue
+				for (Connection conn : current.getConnections()) {
+
+					Node neighbour = conn.getOtherNode(current);
+
+					// If the neighbour is ours, explore it
+					if (neighbour.getOwner() == player) {
+						neighbour.getPathBuilder().add(current);
+						exploreQueue.add(neighbour);
+					}
+				}
+			}
+		}
+
+		return influence;
+	}
 
 	public Network(int size) {
 		this.size = size;

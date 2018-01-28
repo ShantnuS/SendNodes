@@ -3,6 +3,7 @@ package com.sendnodes.entities;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.sendnodes.Network;
 import com.sendnodes.nodes.Connection;
 import com.sendnodes.nodes.Node;
 
@@ -10,7 +11,8 @@ import powerups.PlayerPowerUp;
 
 public class Player {
 	private Node startingNode;
-	private int ip = 500;
+	private int initial_ip = 5;
+	private int current_ip = 5;
 	
 	private ArrayList<Attack> targets;
 	private ArrayList<PlayerPowerUp> powerups;
@@ -36,9 +38,13 @@ public class Player {
 		attackTargets();
 	}
 	
+	public void recalculateInfluence(){
+		current_ip = Network.calculateInfluence(this) + initial_ip;
+	}
+	
 	//TODO: Prioritise attacks??
 	private void attackTargets(){
-		int remainingIp = ip;
+		int remainingIp = initial_ip;
 		Iterator<Attack> iterAttack = getTargets().iterator();
 		while (iterAttack.hasNext()) {
 			Attack attack = iterAttack.next();
@@ -98,5 +104,9 @@ public class Player {
 	}
 	public int getY(){
 		return startingNode.getYPos();
+	}
+
+	public int getInitialInfluence() {
+		return initial_ip;
 	}
 }
