@@ -80,7 +80,7 @@ public class UIManager {
         //textButtonStyle.checked = skin.getDrawable("test02");
         TextButton attackButton = new TextButton("", attackButtonStyle);
         attackButton.setPosition(50, 70);
-        stage.addActor(attackButton);
+        //stage.addActor(attackButton);
 		
         attackButton.addListener(new ChangeListener() {
             @Override
@@ -195,7 +195,7 @@ public class UIManager {
 		
 		
         
-		dialogueContainer = new Container(-200,-200,50,50, stage);
+		dialogueContainer = new Container(-200,-200,50,50, stage); 
 	     
 		// Clicking the attack triggers an expenditure of resources on the target node
         TextButton tb = ButtonMaker.getTexturedButton("", "PU_node_attack", "PU_node_attack");
