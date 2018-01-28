@@ -22,14 +22,10 @@ public class MusicManager implements Runnable {
 	
 	private static  String path = "Music/";
 	public static enum SOUNDS{
-		track1,
-		track2,
-		track3
+		track1
 	}	
 	private static String[] soundPaths = {
-		path + "track1.mp3",
-		path + "track2.mp3",
-		path + "track3.mp3",
+		path + "track1.mp3"
 	};
 	
 /*	private static String path = "Sounds/";
@@ -53,6 +49,7 @@ public class MusicManager implements Runnable {
 	public MusicManager()
 	{			
 		updateTrack();
+		new Thread(this).start();
 	}
 	
 	

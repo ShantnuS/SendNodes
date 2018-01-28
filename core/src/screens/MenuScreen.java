@@ -2,6 +2,9 @@ package screens;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,6 +19,8 @@ public class MenuScreen {
     Stage stage;   
     ButtonContainer container;
     private ArrayList<TextButton> buttons;
+    Texture background;
+    Sprite backgroundSprite;
 	
 	public MenuScreen(Stage stage) {
 		this.stage = stage;
@@ -23,7 +28,7 @@ public class MenuScreen {
 	}
 
 	public void create() {
-		container = new ButtonContainer(Properties.SCREEN_WIDTH / 2 - 100, Properties.SCREEN_HEIGHT * 3 / 4, 200,
+		container = new ButtonContainer(Properties.SCREEN_WIDTH / 2 - 100, Properties.SCREEN_HEIGHT * 3 / 4 -200, 200,
 				Properties.SCREEN_HEIGHT / 2, 200, 100, stage);
 
 		TextButton tb = ButtonMaker.getBasicButton("Play");
@@ -115,10 +120,22 @@ public class MenuScreen {
 	}
 
 	public void render(SpriteBatch batch) {
+		//background
+		background = new Texture(Gdx.files.internal("Titlescreen/titlescreen.png"));
+        backgroundSprite =new Sprite(background);
+		backgroundSprite.draw(batch);
+		
+		//text
+		background = new Texture(Gdx.files.internal("Titlescreen/text.png"));
+        backgroundSprite =new Sprite(background);
+        backgroundSprite.setPosition(Properties.SCREEN_WIDTH/4-50, Properties.SCREEN_HEIGHT*3/4 -100);
+		backgroundSprite.draw(batch);
+		
 		batch.end();
 		batch.begin();
 		stage.draw();
 		container.render(batch);
+		//batch.draw(background,1920,1080);
 	}
 
 }
