@@ -21,16 +21,21 @@ public class Container {
 	int bSizeX;
 	int bSizeY;
 	
-	public Container(int posX, int posY, int sizeX, int sizeY, int bSizeX, int bSizeY) {
+	public Container(int posX, int posY, int bSizeX, int bSizeY) {
 		buttons = new ArrayList<TextButton>();
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		this.posX = posX;
 		this.posY = posY;
-		this.sizeX = sizeX;
-		this.sizeY = sizeY;
 		this.bSizeX = bSizeX;
 		this.bSizeY = bSizeY;		
+	}
+	
+	// If you want to just move the container
+	public void move(int posX, int posY, boolean isLandscape){
+		this.posX = posX;
+		this.posY = posY;
+		resizeActors(isLandscape);
 	}
 	
 	public void render(SpriteBatch batch) {
@@ -41,27 +46,29 @@ public class Container {
 	
 	public void resizeActors(boolean isLandscape) {
 		int bCount = buttons.size();
-		int offsetX = sizeX /2;
-		int offsetY = sizeY /2;
+		int offsetX = posX;
+		int offsetY = posY;
 		int distance = 0;
 		
+
+		//offsetY -= (bSizeY*bCount)/2;
+		offsetX += (bSizeX*bCount)/2;
+		
 		if(isLandscape) {
-			offsetY -= bSizeY/2;
-			distance = -(sizeX) / (bCount + 2);
+			distance = -bSizeX-10;
 		}
 		else {
-			offsetX -= bSizeX/2;
-			distance = -(sizeY) / (bCount + 2);
+			distance = -bSizeY-10;
 		}
 		
 		int counter = 1;
 		for(TextButton b: buttons) {
 			b.setSize(bSizeX,bSizeY);
 			if(isLandscape) {
-				b.setPosition(posX+distance*counter, (posY+offsetY) );
+				b.setPosition(offsetX+(distance*counter), offsetY );
 			}
 			else {
-				b.setPosition(posX+offsetX, (posY+distance*counter));
+				b.setPosition(offsetX, offsetY+(distance*counter));
 			}
 			counter++;
 			stage.addActor(b);
@@ -70,6 +77,8 @@ public class Container {
 	
 	public void addButton(TextButton button) {
 		buttons.add(button);
+		sizeX+=button.getWidth();
+		sizeY+=button.getHeight();
 	}
 	
 	public ArrayList<TextButton> getButtons() {

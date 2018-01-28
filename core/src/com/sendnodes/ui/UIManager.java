@@ -73,7 +73,7 @@ public class UIManager {
 	}
 	
 	public void initialiseAttackDialogue(){
-		dialogueContainer = new Container(Properties.SCREEN_WIDTH/2-100,Properties.SCREEN_HEIGHT* 3/4,200,Properties.SCREEN_HEIGHT/2,200,100);
+		dialogueContainer = new Container(-400,-400,200,100);
 	     
         TextButton tb = ButtonMaker.getBasicButton("Play");
         tb.addListener(new ChangeListener() {
@@ -101,7 +101,7 @@ public class UIManager {
             }
         });   
         dialogueContainer.addButton(tb);
-        dialogueContainer.resizeActors(false);
+        dialogueContainer.resizeActors(true);
 	}
 	public void update(){
 		if(!Gdx.input.isButtonPressed(Input.Buttons.LEFT) && clickedDownLeft == true){
@@ -134,12 +134,15 @@ public class UIManager {
 	
 	public void showDialogue(int x, int y){
 		System.out.println("tre");
-		attackDialogue.setPos(-1, -1);
+		dialogueContainer.move(x, y-100, true);
+		
+		//attackDialogue.setPos(-1, -1);
 		showAttackDialogue = true;
 	}
 	
 	public void hideDialogue(){
-		attackDialogue.setPos(-200, -100);
+		dialogueContainer.move(-400, -400, true);
+		//attackDialogue.setPos(-200, -100);
 		showAttackDialogue = false;
 	}
 }
