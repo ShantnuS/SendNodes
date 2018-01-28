@@ -22,13 +22,14 @@ import powerups.NodePowerUp;
 
 public class Node {
 	private ArrayList<Connection> connections;
-	private int hp = new Random().nextInt(45) + 5;
+	private Random r = new Random();
+	private int hp = r.nextInt(70) + 140;
 	private int shield;
 	private Player player;
 	private List<Node> latestPipePath;
 	private int x, y;
 	private NodePowerUp powerup;
-	private int ipBoost = 0;
+	private int ipBoost = r.nextInt(3);
 
 	public Node(int x, int y) {
 		connections = new ArrayList<Connection>();
@@ -50,6 +51,12 @@ public class Node {
 		return this.powerup;
 	}
 
+	public void setupRoot(Player player){
+		this.player = player;
+		this.ipBoost=0;
+		this.hp=3000;
+	}
+	
 	public int getIpBoost() {
 		return ipBoost;
 	}
@@ -74,6 +81,8 @@ public class Node {
 				from.gainedNode(this);
 			}
 			hp = -hp;
+			hp = (int) (hp*1.0/2);
+			hp+=20;
 			return true;
 		}
 		return false;

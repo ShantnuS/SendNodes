@@ -63,10 +63,13 @@ public class EntityManager {
 		
 		players = new ArrayList<Player>();
 		players.add(new Player(map.getRandomNode(), "node_player_blue", "node_blue"));
-		players.get(0).getNode().setOwner(players.get(0));
+		players.get(0).getNode().setupRoot(players.get(0));
 		
 		players.add(new Player(map.getRandomNode(), "node_player_red", "node_red"));
-		players.get(1).getNode().setOwner(players.get(1));
+		players.get(1).getNode().setupRoot(players.get(1));
+		
+		players.add(new Player(map.getRandomNode(), "node_player_green", "node_green"));
+		players.get(2).getNode().setupRoot(players.get(2));
 		
 		tile_size = images.get("node_blue").getWidth() * Properties.GRAPHICS_SCALE;
 
@@ -94,8 +97,9 @@ public class EntityManager {
 
 	public void update() {
 		PlayerAI.AIMove(players.get(1));
+		PlayerAI.AIMove(players.get(2));
 		timeSinceAttack += Gdx.graphics.getDeltaTime();
-		if (timeSinceAttack >= 0.15) {
+		if (timeSinceAttack >= 0.3) {
 			for (Player player : players) {
 				player.update();
 			}
@@ -197,7 +201,6 @@ public class EntityManager {
 				
 				GameController.getInstance().UI().showDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1]);
 				clickedOnATarget = true;
-				
 				
 				attackDialogue = new AttackDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1]);
 				Attack attack = new Attack(players.get(0), map.getMap()[xNode][yNode], -1);

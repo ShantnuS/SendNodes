@@ -84,7 +84,7 @@ public class Player {
 			System.out.println("test2");
 
 			// Go through every connection to the target
-			for (Connection conn : attack.getTarget().getConnections()) {
+			for (Connection conn: attack.getTarget().getConnections()) {
 
 				// Cap damage if over AD points
 				if (maxPossibleDamage > remainingIp) {
@@ -95,7 +95,10 @@ public class Player {
 				if (conn.getOtherNode(attack.getTarget()).getOwner() == this) {
 					Player victim = attack.getTarget().getOwner();
 					// Do all damage possible
-					if (maxPossibleDamage <= conn.getBandwidth()) {
+					System.out.println(maxPossibleDamage);
+					System.out.println(conn.getBandwidth());
+					
+					if (Math.abs(maxPossibleDamage) <= conn.getBandwidth()) {
 
 						boolean destroyed = attack.getTarget().adjustHealth(maxPossibleDamage, this);
 						if (destroyed) {
@@ -103,13 +106,14 @@ public class Player {
 							killedVictims.add(victim);
 						}
 
-						remainingIp -= maxPossibleDamage;
+						remainingIp -= Math.abs(maxPossibleDamage);
 						break;
 
 					}
 					// Throttle damage
 					else {
-						boolean destroyed = attack.getTarget().adjustHealth(conn.getBandwidth(), this);
+						System.out.println("throttle damage");
+						boolean destroyed = attack.getTarget().adjustHealth(Integer.signum(maxPossibleDamage) * conn.getBandwidth(), this);
 						remainingIp -= conn.getBandwidth();
 
 						if (destroyed) {

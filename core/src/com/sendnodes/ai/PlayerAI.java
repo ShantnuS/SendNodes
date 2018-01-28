@@ -11,7 +11,7 @@ import com.sendnodes.nodes.Node;
 
 public class PlayerAI {
 	public static void AIMove(Player player) {
-		if (player.getTargets().size() == 0) {
+		if (player.getTargets().size() == 0 && player.getOwnedNodes().size()>0) {
 			int numberOfNodes = player.getOwnedNodes().size();
 			System.out.println(numberOfNodes);
 			ArrayList<Node> ownedNodes = player.getOwnedNodes();
@@ -21,7 +21,7 @@ public class PlayerAI {
 				if (conn.getOtherNode(randomNode) != null && conn.getOtherNode(randomNode).getOwner() != player) {
 					if(Network.isConnected(player, player.getNode(), conn.getOtherNode(randomNode))){
 						System.out.println(player);
-						player.addTarget(new Attack(player, conn.getOtherNode(randomNode), -1));
+						player.addTarget(new Attack(player, conn.getOtherNode(randomNode), -player.getCPU()));
 					}
 					break;
 				}
