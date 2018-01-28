@@ -1,6 +1,7 @@
 package com.sendnodes.entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -62,14 +63,18 @@ public class EntityManager {
 		map = new Network(map_size);
 		addLabels(map);
 		
+		ArrayList<Node> allNodes = map.getNodes();
+		Collections.shuffle(allNodes);
+		
+		
 		players = new ArrayList<Player>();
-		players.add(new Player(map.getRandomNode(), "node_player_blue", "node_blue"));
+		players.add(new Player(allNodes.get(0), "node_player_blue", "node_blue"));
 		players.get(0).getNode().setupRoot(players.get(0));
 		
-		players.add(new Player(map.getRandomNode(), "node_player_red", "node_red"));
+		players.add(new Player(allNodes.get(1), "node_player_red", "node_red"));
 		players.get(1).getNode().setupRoot(players.get(1));
 		
-		players.add(new Player(map.getRandomNode(), "node_player_green", "node_green"));
+		players.add(new Player(allNodes.get(2), "node_player_green", "node_green"));
 		players.get(2).getNode().setupRoot(players.get(2));
 		
 		tile_size = images.get("node_blue").getWidth() * Properties.GRAPHICS_SCALE;
