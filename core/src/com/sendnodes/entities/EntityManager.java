@@ -208,4 +208,8 @@ public class EntityManager {
 		}
 	}
 
+	public int getPlayerLoad(int player){
+		return players.get(player).getCPU();
+	}
+	
 }

@@ -8,8 +8,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
@@ -34,6 +36,8 @@ public class UIManager {
 	
 	private GridContainer dialogueGridContainer;
 	
+	private Label loadLabel;
+	
 	public UIManager(){
 		initialiseAttackDialogue();
 		
@@ -43,6 +47,19 @@ public class UIManager {
 		// initialising
 		showAttackDialogue = false;
 		
+		// labels
+		LabelStyle textStyle;
+		BitmapFont font = new BitmapFont();
+
+		textStyle = new LabelStyle();
+		textStyle.font = font;
+		
+		loadLabel = new Label("", textStyle);
+		loadLabel.setBounds(Properties.SCREEN_WIDTH-100, Properties.SCREEN_HEIGHT-100, 50, 50);
+		loadLabel.setFontScale(1f, 1f);
+		
+		stage.addActor(loadLabel);
+		
 		// other
 		this.atlas = new TextureAtlas(Gdx.files.internal("UIAtlas/textures.atlas"));
 		
@@ -51,7 +68,6 @@ public class UIManager {
 		
 		TextButtonStyle attackButtonStyle = new TextButtonStyle();
 		
-		BitmapFont font = new BitmapFont();
 		attackButtonStyle.font = font;
 		
 		attackButtonStyle.up = skin.getDrawable("UI_menu_button_up");
@@ -133,7 +149,10 @@ public class UIManager {
 		dialogueGridContainer.addContainer(dialogueSliderContainer);
 		dialogueGridContainer.addContainer(dialogueContainer);
 	}
+	
 	public void update(){
+		loadLabel.setText(""+GameController.getInstance().EM().getPlayerLoad(0));
+		
 		if(!Gdx.input.isButtonPressed(Input.Buttons.LEFT) && clickedDownLeft == true){
 			int x = Gdx.input.getX();
 			int y = Gdx.input.getY();
@@ -161,6 +180,8 @@ public class UIManager {
 			dialogueGridContainer.render(batch);
 			//attackDialogue.render(batch, attackDialogueTexture);
 		}
+		
+		stage.draw();
 	}
 	
 	public void showDialogue(int x, int y){
