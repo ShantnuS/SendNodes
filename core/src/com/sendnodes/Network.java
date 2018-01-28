@@ -41,13 +41,12 @@ public class Network {
 		}
 		return null;
 	}
-	
-	public static ArrayList<Attack> pruneAttacks(Player player, ArrayList<Attack> attacks){
+
+	public static ArrayList<Attack> pruneAttacks(Player player, ArrayList<Attack> attacks) {
 		Set<Node> explored = new HashSet<Node>();
 		List<Node> exploreQueue = new ArrayList<Node>();
 
 		exploreQueue.add(player.getNode()); // start from here
-
 
 		while (!exploreQueue.isEmpty()) {
 			// Get next item in queue and mark it as explored
@@ -70,23 +69,30 @@ public class Network {
 				}
 			}
 		}
+		HashSet<Node> explored_with_neighbours = new HashSet<Node>();
+		for (Node node : explored) {
+			explored_with_neighbours.add(node);
+			for (Connection conn : node.getConnections()) {
+				explored_with_neighbours.add(conn.getOtherNode(node));
+			}
+		}
+		// buggy code
 		Iterator<Attack> iter = attacks.iterator();
-		while (iter.hasNext()){
+		while (iter.hasNext()) {
 			Attack attack = iter.next();
-			if(!explored.contains(attack.getTarget())){
+			if (!explored_with_neighbours.contains(attack.getTarget())) {
 				iter.remove();
 			}
 		}
 		return attacks;
 	}
-	
-	public static int calculateInfluence(Player player){
+
+	public static int calculateInfluence(Player player) {
 		int influence = 0;
 		Set<Node> explored = new HashSet<Node>();
 		List<Node> exploreQueue = new ArrayList<Node>();
 
 		exploreQueue.add(player.getNode()); // start from here
-
 
 		while (!exploreQueue.isEmpty()) {
 			// Get next item in queue and mark it as explored
@@ -194,49 +200,53 @@ public class Network {
 		return nodes.get(r.nextInt(nodes.size()));
 	}
 
-	public boolean isConnected(Player player, Node node1, Node target) {
+	public static boolean isConnected(Player player, Node node1, Node target) {
+		if (node1.getOwner() == player) {
 
-		Set<Node> explored = new HashSet<Node>();
-		List<Node> exploreQueue = new ArrayList<Node>();
+			Set<Node> explored = new HashSet<Node>();
+			List<Node> exploreQueue = new ArrayList<Node>();
 
-		exploreQueue.add(node1); // start from here
+			exploreQueue.add(node1); // start from here
 
-		boolean pathExists = false;
+			boolean pathExists = false;
 
-		while (!exploreQueue.isEmpty() && !pathExists) {
-			// Get next item in queue and mark it as explored
-			Node current = exploreQueue.remove(0);
+			while (!exploreQueue.isEmpty() && !pathExists) {
+				// Get next item in queue and mark it as explored
+				Node current = exploreQueue.remove(0);
 
-			if (!explored.contains(current)) {
-				explored.add(current);
+				if (!explored.contains(current)) {
+					explored.add(current);
 
-				// If our current node is our target to find, exit with success
-				if (current == target) {
-					pathExists = true;
-					break;
-				}
-
-				// Go through each connected neighbour and add it to the
-				// exploration queue
-				for (Connection conn : current.getConnections()) {
-
-					Node neighbour = conn.getOtherNode(current);
-
-					// If the neighbour is ours, explore it
-					if (neighbour.getOwner() == player || player == null) {
-						neighbour.getPathBuilder().add(current);
-						exploreQueue.add(neighbour);
-					}
-					// If it's the target, we found it!
-					else if (neighbour == target) {
+					// If our current node is our target to find, exit with
+					// success
+					if (current == target) {
 						pathExists = true;
 						break;
 					}
+
+					// Go through each connected neighbour and add it to the
+					// exploration queue
+					for (Connection conn : current.getConnections()) {
+
+						Node neighbour = conn.getOtherNode(current);
+
+						// If the neighbour is ours, explore it
+						if (neighbour.getOwner() == player || player == null) {
+							neighbour.getPathBuilder().add(current);
+							exploreQueue.add(neighbour);
+						}
+						// If it's the target, we found it!
+						else if (neighbour == target) {
+							pathExists = true;
+							break;
+						}
+					}
 				}
 			}
-		}
 
-		return pathExists;
+			return pathExists;
+		}
+		return false;
 	}
 
 	public ArrayList<Connection> getConnections() {

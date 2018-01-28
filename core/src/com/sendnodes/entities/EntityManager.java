@@ -95,7 +95,7 @@ public class EntityManager {
 	public void update() {
 		PlayerAI.AIMove(players.get(1));
 		timeSinceAttack += Gdx.graphics.getDeltaTime();
-		if (timeSinceAttack >= 0.2) {
+		if (timeSinceAttack >= 0.15) {
 			for (Player player : players) {
 				player.update();
 			}
@@ -218,8 +218,6 @@ public class EntityManager {
 		int yNode = (int) Math.floor(y / node_size[1]);
 		System.out.print(xNode + " " + yNode);
 		if (map.getMap()[xNode][yNode] != null) {
-			System.out.println("1");
-			System.out.println(map.isConnected(players.get(0), players.get(0).getNode(), map.getMap()[xNode][yNode]));
 			map.getMap()[xNode][yNode].setOwner(players.get(1));
 		}
 	}
