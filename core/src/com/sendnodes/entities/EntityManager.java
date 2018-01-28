@@ -75,6 +75,9 @@ public class EntityManager {
 		players = new ArrayList<Player>();
 		players.add(new Player(map.getRandomNode()));
 		players.get(0).getNode().setOwner(players.get(0));
+		
+		players.add(new Player(map.getRandomNode()));
+		players.get(1).getNode().setOwner(players.get(1));
 
 		tile_size = images.get("node_blue").getWidth() * Properties.GRAPHICS_SCALE;
 
@@ -149,7 +152,7 @@ public class EntityManager {
 			return (c.getConnectedNodes()[point].getYPos() * node_size[1]) + (tile_size / 2);
 	}
 
-	public void registerClick(int x, int y) {
+	public void registerLeftClick(int x, int y) {
 		y = Properties.SCREEN_HEIGHT - y;
 		x = x + (node_size[0] / 2);
 		y = y + (node_size[1] / 2);
@@ -172,6 +175,24 @@ public class EntityManager {
 					players.get(0).addTarget(attack);
 				}
 			}
+		}
+	}
+	
+	public void registerRightClick(int x, int y) {
+		y = Properties.SCREEN_HEIGHT - y;
+		x = x + (node_size[0] / 2);
+		y = y + (node_size[1] / 2);
+
+		x = (x < 0) ? 0 : x;
+		y = (y < 0) ? 0 : y;
+
+		int xNode = (int) Math.floor(x / node_size[0]);
+		int yNode = (int) Math.floor(y / node_size[1]);
+		System.out.print(xNode + " " + yNode);
+		if (map.getMap()[xNode][yNode] != null) {
+			System.out.println("1");
+			System.out.println(map.isConnected(players.get(0), players.get(0).getNode(), map.getMap()[xNode][yNode]));
+			map.getMap()[xNode][yNode].setOwner(players.get(1));
 		}
 	}
 

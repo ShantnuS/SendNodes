@@ -9,7 +9,8 @@ import soundengine.SoundManager;
 
 public class UIManager {
 	private EntityManager em;
-	private boolean clickedDown = false;
+	private boolean clickedDownLeft = false;
+	private boolean clickedDownRight = false;
 	
 	public UIManager(EntityManager em){
 		this.em = em;
@@ -20,14 +21,24 @@ public class UIManager {
 	}
 	
 	public void update(){
-		if(!Gdx.input.isButtonPressed(Input.Buttons.LEFT) && clickedDown == true){
+		if(!Gdx.input.isButtonPressed(Input.Buttons.LEFT) && clickedDownLeft == true){
 			int x = Gdx.input.getX();
 			int y = Gdx.input.getY();
 			
-			em.registerClick(x, y);
+			em.registerLeftClick(x, y);
 			
 			GameController.getInstance().getSoundManager().playSound(SoundManager.SOUNDS.CLICK.ordinal());
 		}
-		clickedDown = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
+		clickedDownLeft = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
+		
+		if(!Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && clickedDownRight == true){
+			int x = Gdx.input.getX();
+			int y = Gdx.input.getY();
+			
+			em.registerRightClick(x, y);
+			
+			GameController.getInstance().getSoundManager().playSound(SoundManager.SOUNDS.CLICK.ordinal());
+		}
+		clickedDownRight = Gdx.input.isButtonPressed(Input.Buttons.RIGHT);
 	}
 }
