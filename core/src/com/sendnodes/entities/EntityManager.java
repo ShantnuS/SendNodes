@@ -208,6 +208,7 @@ public class EntityManager {
 				
 				//GameController.getInstance().UI().showDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1]);
 				clickedOnATarget = true;
+				GameController.getInstance().UI().reInitTargetList();
 			}
 		}
 		
@@ -242,4 +243,9 @@ public class EntityManager {
 		return players.get(player).getCPU();
 	}
 	
+	
+	public Player getPlayer1()
+	{
+		return players.get(0);
+	}
 }

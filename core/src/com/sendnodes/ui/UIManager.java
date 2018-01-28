@@ -1,5 +1,7 @@
 package com.sendnodes.ui;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -35,9 +37,9 @@ public class UIManager {
 	
 	private Texture attackDialogueTexture;
 	
-	private Container dialogueContainer, dialogueSliderContainer;
+	private Container dialogueContainer, dialogueSliderContainer ;
 	
-	private GridContainer dialogueGridContainer;
+	private GridContainer dialogueGridContainer,targetList;
 	
 	private Label loadLabel;
 	
@@ -45,8 +47,7 @@ public class UIManager {
 		this.stage = stage;
 		
 		initialiseAttackDialogue();
-		
-		
+		initTargetList();
 		// initialising
 		showAttackDialogue = false;
 		
@@ -92,6 +93,75 @@ public class UIManager {
 		this.attackDialogue = new AttackDialogue(-100, -100);
 		
 		attackDialogueTexture = new Texture("UI/UI_node_menu.png");
+	}
+	
+	public void initTargetList()
+	{
+		targetList = new GridContainer();
+	}
+	
+	public void reInitTargetList()
+	{
+		int x = 500, y = 500;
+		targetList = new GridContainer();
+
+		Container tc = new Container(x,y, 100, 100, stage);
+		tc.addButton(ButtonMaker.getLabel("test"));  
+        
+        TextButton s1 = ButtonMaker.getBasicButton("Show");
+        s1.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	// show where the node is
+            }
+        });   
+        tc.addButton(s1);  
+        
+        s1 = ButtonMaker.getBasicButton("X");
+        s1.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	// GameController.getInstance().EM().getPlayer1().getTargets().remove(a);
+            	 // update render of list
+            	 reInitTargetList();
+            }
+        });   
+        tc.addButton(s1); 
+        tc.resizeActors(true);
+        
+        targetList.addContainer(tc);
+		
+		/*for(final Attack a : GameController.getInstance().EM().getPlayer1().getTargets())
+		{
+			Node target = a.getTarget();
+			Container tc = new Container(x,y, 100, 500, stage);
+			TextButton s1 = ButtonMaker.getBasicButton(target.getXPos() + " : " + target.getYPos());
+			tc.addButton(s1);   
+	        
+	        s1 = ButtonMaker.getBasicButton("Show");
+	        s1.addListener(new ChangeListener() {
+	            @Override
+	            public void changed (ChangeEvent event, Actor actor) {
+	            	// show where the node is
+	            }
+	        });   
+	        tc.addButton(s1);  
+	        
+	        s1 = ButtonMaker.getBasicButton("X");
+	        s1.addListener(new ChangeListener() {
+	            @Override
+	            public void changed (ChangeEvent event, Actor actor) {
+	            	 GameController.getInstance().EM().getPlayer1().getTargets().remove(a);
+	            	 // update render of list
+	            	 initTargetList();
+	            }
+	        });   
+	        tc.addButton(s1); 
+	        tc.resizeActors(true);
+	        
+	        targetList.addContainer(tc);
+		}*/
+		targetList.resizeActors(false);
 	}
 	
 	public void initialiseAttackDialogue(){
@@ -157,6 +227,7 @@ public class UIManager {
         dialogueContainer.addButton(tb);
         dialogueContainer.resizeActors(true);
         
+        
 
 		dialogueGridContainer.addContainer(dialogueSliderContainer);
 		dialogueGridContainer.addContainer(dialogueContainer);
@@ -192,7 +263,7 @@ public class UIManager {
 			dialogueGridContainer.render(batch);
 			//attackDialogue.render(batch, attackDialogueTexture);
 		}
-		
+		targetList.render(batch);
 		stage.draw();
 	}
 	
