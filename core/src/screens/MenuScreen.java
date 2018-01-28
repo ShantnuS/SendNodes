@@ -13,6 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.sendnodes.GameController;
 import com.sendnodes.Properties;
 import com.sendnodes.ui.ButtonMaker;
+
+import soundengine.SoundManager;
+
 import com.sendnodes.ui.ButtonContainer;
 
 public class MenuScreen {	
@@ -41,6 +44,8 @@ public class MenuScreen {
 					buttons.get(0).setVisible(false);
 					buttons.get(1).setVisible(false);
 					buttons.get(2).setVisible(false);
+					
+					GameController.getInstance().getSoundManager().playSound(SoundManager.SOUNDS.START_GAME.ordinal());
 				}
 			}
 		});

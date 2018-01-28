@@ -85,6 +85,17 @@ public class UIManager {
 		attackButtonStyle.down = skin.getDrawable("UI_menu_button_down");
         
         //textButtonStyle.checked = skin.getDrawable("test02");
+        TextButton attackButton = new TextButton("", attackButtonStyle);
+        attackButton.setPosition(50, 70);
+        //stage.addActor(attackButton);
+		
+        attackButton.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	GameController.getInstance().setScreenNumber(1);
+                System.out.println("Attack");
+            }
+        }); 
         
 		this.attackDialogue = new AttackDialogue(-100, -100);
 		
@@ -188,7 +199,10 @@ public class UIManager {
 				Attack attack = new Attack(attackDialogue.getPlayer(), attackDialogue.getQuery(), -1);
 				
 				if (!Attack.alreadyExists(attackDialogue.getPlayer().getTargets(), attack))
+				{
 					attackDialogue.getPlayer().addTarget(attack);
+					GameController.getInstance().getSoundManager().playSound(SoundManager.SOUNDS.EXCHANGE.ordinal());
+				}
             }
         });   
         dialogueContainer.addButton(tb);        

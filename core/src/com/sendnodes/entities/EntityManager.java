@@ -1,15 +1,19 @@
 package com.sendnodes.entities;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -58,18 +62,14 @@ public class EntityManager {
 		map = new Network(map_size);
 		addLabels(map);
 		
-		ArrayList<Node> allNodes = map.getNodes();
-		Collections.shuffle(allNodes);
-		
-		
 		players = new ArrayList<Player>();
-		players.add(new Player(allNodes.get(0), "node_player_blue", "node_blue"));
+		players.add(new Player(map.getRandomNode(), "node_player_blue", "node_blue"));
 		players.get(0).getNode().setupRoot(players.get(0));
 		
-		players.add(new Player(allNodes.get(1), "node_player_red", "node_red"));
+		players.add(new Player(map.getRandomNode(), "node_player_red", "node_red"));
 		players.get(1).getNode().setupRoot(players.get(1));
 		
-		players.add(new Player(allNodes.get(2), "node_player_green", "node_green"));
+		players.add(new Player(map.getRandomNode(), "node_player_green", "node_green"));
 		players.get(2).getNode().setupRoot(players.get(2));
 		
 		tile_size = images.get("node_blue").getWidth() * Properties.GRAPHICS_SCALE;
@@ -132,11 +132,6 @@ public class EntityManager {
 			if(c.getBandwidth() >= 15) {
 				sr.setColor(Color.GREEN);
 			}
-			
-		
-/*			float value = c.getBandwidth();
-			sr.setColor(new Color(50.0f,50.0f,value,1));*/
-			
 			//sr.setColor(1, 1, 1, 1);
 			sr.line(getLinePoint(c, 0, true), getLinePoint(c, 0, false), getLinePoint(c, 1, true),
 					getLinePoint(c, 1, false));
@@ -163,10 +158,18 @@ public class EntityManager {
 			}
 		}
 
-		for (Player p : players) {
-			System.out.println(p.getPlayerTextureName());
-			batch.draw(images.get(p.getPlayerTextureName()), (p.getX() * node_size[0])-(tile_size/2), (p.getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
-		}
+//		System.out.println("first loop");
+//		for (Player p : players) {
+//			System.out.println(p.getPlayerTextureName());
+//			batch.draw(images.get(p.getPlayerTextureName()), (p.getX() * node_size[0])-(tile_size/2), (p.getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
+//		}
+		
+		System.out.println(((players.get(0).getX() * node_size[0])-(tile_size/2)) + ":" + ((players.get(0).getY() * node_size[1])-(tile_size/2)));
+		System.out.println(((players.get(1).getX() * node_size[0])-(tile_size/2)) + ":" + ((players.get(1).getY() * node_size[1])-(tile_size/2)));
+		//System.out.println();
+		batch.draw(images.get("node_player_blue"), (players.get(0).getX() * node_size[0])-(tile_size/2), (players.get(0).getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
+		batch.draw(images.get("node_player_red"), (players.get(1).getX() * node_size[0])-(tile_size/2), (players.get(1).getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
+		
 		
 		
 		batch.flush();
@@ -207,11 +210,9 @@ public class EntityManager {
 			if (map.getMap()[xNode][yNode].getOwner() != players.get(0) 
 					&& map.isConnected(players.get(0), players.get(0).getNode(), map.getMap()[xNode][yNode])) {
 				
-
+				//GameController.getInstance().UI().showDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1]);
 				GameController.getInstance().UI().showDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1],
 						map.getMap()[xNode][yNode], node_size[0], node_size[1], players.get(0));
-				
-				//GameController.getInstance().UI().showDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1]);
 				clickedOnATarget = true;
 				//GameController.getInstance().UI().initialiseSideDialogue();
 			}

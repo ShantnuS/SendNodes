@@ -19,6 +19,7 @@ import com.sendnodes.GameController;
 import com.sendnodes.entities.Player;
 
 import powerups.NodePowerUp;
+import soundengine.SoundManager;
 
 public class Node {
 	private ArrayList<Connection> connections;
@@ -137,6 +138,7 @@ public class Node {
 			this.player.gainedNode(this);
 			this.player.recalculateNodeData();
 		}
+		GameController.getInstance().getSoundManager().playSound(SoundManager.SOUNDS.BACK.ordinal());
 	}
 
 	public int getXPos() {
