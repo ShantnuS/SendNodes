@@ -22,85 +22,91 @@ public class MenuScreen {
 	public MenuScreen(Stage stage) {
 		this.stage = stage;
 	}
-	
+
 	public void create() {
-        container = new ButtonContainer(Properties.SCREEN_WIDTH/2-100,Properties.SCREEN_HEIGHT* 3/4,200,Properties.SCREEN_HEIGHT/2,200,100, stage);
-     
-        TextButton tb = ButtonMaker.getBasicButton("Play");
-        tb.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-            	GameController.getInstance().setScreenNumber(1);
-            }
-        });   
-        container.addButton(tb);        
-        
-        tb = ButtonMaker.getBasicButton("Settings");
-        tb.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-            	//GameController.getInstance().setScreenNumber(1);
-            }
-        });   
-        container.addButton(tb);
-        
-        tb = ButtonMaker.getBasicButton("Exit");
-        tb.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-            	System.exit(0);
-            }
-        });   
-        container.addButton(tb);
-        
-        container.resizeActors();
-        
-/*		uiContainer = new UIContainer(Properties.SCREEN_WIDTH/2-100,Properties.SCREEN_HEIGHT* 3/4);
-		
-        container = new ButtonContainer(0,Properties.SCREEN_HEIGHT,200,Properties.SCREEN_HEIGHT/2,200,100);
-        
-        TextButton tb = ButtonMaker.getBasicButton("Play");
-        tb.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-            	GameController.getInstance().setScreenNumber(1);
-            }
-        });   
-        container.addButton(tb);        
-        
-        tb = ButtonMaker.getBasicButton("Settings");
-        tb.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-            	//GameController.getInstance().setScreenNumber(1);
-            }
-        });   
-        container.addButton(tb);
-        
-        tb = ButtonMaker.getBasicButton("Exit");
-        tb.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-            	System.exit(0);
-            }
-        });   
-        container.addButton(tb);
-        //container.resizeActors();
-        
-        incrementor = new Incrementor(0,Properties.SCREEN_HEIGHT/2,200,100, inc);
-        
-        uiContainer.addContainer(incrementor);
-        uiContainer.addContainer(container);
-        
-        uiContainer.resizeActors();*/
+		container = new ButtonContainer(Properties.SCREEN_WIDTH / 2 - 100, Properties.SCREEN_HEIGHT * 3 / 4, 200,
+				Properties.SCREEN_HEIGHT / 2, 200, 100, stage);
+
+		TextButton tb = ButtonMaker.getBasicButton("Play");
+		tb.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (GameController.getInstance().screenNumber == 0) {
+					GameController.getInstance().setScreenNumber(1);
+				}
+			}
+		});
+		container.addButton(tb);
+
+		tb = ButtonMaker.getBasicButton("Settings");
+		tb.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (GameController.getInstance().screenNumber == 0) {
+					// GameController.getInstance().setScreenNumber(1);
+				}
+			}
+		});
+		container.addButton(tb);
+
+		tb = ButtonMaker.getBasicButton("Exit");
+		tb.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				if (GameController.getInstance().screenNumber == 0) {
+					System.exit(0);
+				}
+			}
+		});
+		container.addButton(tb);
+
+		container.resizeActors();
+
+		/*
+		 * uiContainer = new
+		 * UIContainer(Properties.SCREEN_WIDTH/2-100,Properties.SCREEN_HEIGHT*
+		 * 3/4);
+		 * 
+		 * container = new
+		 * ButtonContainer(0,Properties.SCREEN_HEIGHT,200,Properties.
+		 * SCREEN_HEIGHT/2,200,100);
+		 * 
+		 * TextButton tb = ButtonMaker.getBasicButton("Play");
+		 * tb.addListener(new ChangeListener() {
+		 * 
+		 * @Override public void changed (ChangeEvent event, Actor actor) {
+		 * GameController.getInstance().setScreenNumber(1); } });
+		 * container.addButton(tb);
+		 * 
+		 * tb = ButtonMaker.getBasicButton("Settings"); tb.addListener(new
+		 * ChangeListener() {
+		 * 
+		 * @Override public void changed (ChangeEvent event, Actor actor) {
+		 * //GameController.getInstance().setScreenNumber(1); } });
+		 * container.addButton(tb);
+		 * 
+		 * tb = ButtonMaker.getBasicButton("Exit"); tb.addListener(new
+		 * ChangeListener() {
+		 * 
+		 * @Override public void changed (ChangeEvent event, Actor actor) {
+		 * System.exit(0); } }); container.addButton(tb);
+		 * //container.resizeActors();
+		 * 
+		 * incrementor = new Incrementor(0,Properties.SCREEN_HEIGHT/2,200,100,
+		 * inc);
+		 * 
+		 * uiContainer.addContainer(incrementor);
+		 * uiContainer.addContainer(container);
+		 * 
+		 * uiContainer.resizeActors();
+		 */
 	}
 
-	
 	public void render(SpriteBatch batch) {
 		batch.end();
 		batch.begin();
 		stage.draw();
 		container.render(batch);
 	}
-	
+
 }

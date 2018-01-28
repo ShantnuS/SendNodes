@@ -22,13 +22,16 @@ import powerups.NodePowerUp;
 
 public class Node {
 	private ArrayList<Connection> connections;
-	private int hp = new Random().nextInt(45) + 5;
+	private Random r = new Random();
+	private int hp = r.nextInt(70) + 140;
+	private int maxhp = hp;
 	private int shield;
 	private Player player;
 	private List<Node> latestPipePath;
 	private int x, y;
 	private NodePowerUp powerup;
-	private int ipBoost = 0;
+	private int ipBoost = r.nextInt(3);
+	private int loot = (r.nextDouble() > 0.6) ? r.nextInt(80) + 20 : 0;
 
 	public Node(int x, int y) {
 		connections = new ArrayList<Connection>();
@@ -42,12 +45,26 @@ public class Node {
 		return hp;
 	}
 
+	public void buffMaxhp(float multiplier) {
+		this.maxhp *= multiplier;
+	}
+
+	public int getMaxhp() {
+		return maxhp;
+	}
+
 	public void setPowerUp(NodePowerUp powerup) {
 		this.powerup = powerup;
 	}
 
 	public NodePowerUp getPowerUp() {
 		return this.powerup;
+	}
+
+	public void setupRoot(Player player) {
+		this.player = player;
+		this.ipBoost = 0;
+		this.hp = 3000;
 	}
 
 	public int getIpBoost() {
@@ -63,18 +80,30 @@ public class Node {
 	}
 
 	public boolean adjustHealth(int health, Player from) {
-		this.hp += health;
-		if (hp < 0) {
-			Player oldPlayer = this.getOwner();
-			if (this.getOwner() != null) {
-				this.getOwner().lostNode(this);
+		if (player==null || !(player.getShieldStatus() == true && health < 0)) {
+			this.hp += health;
+			if (hp < 0) {
+				Player oldPlayer = this.getOwner();
+				if (this.getOwner() != null) {
+					this.getOwner().lostNode(this);
+				}
+				this.setOwner(from);
+				if (loot > 0) {
+					from.giveLoot(loot);
+					loot = 0;
+				}
+				if (from != null) {
+					from.gainedNode(this);
+				}
+				hp = -hp;
+				hp = (int) (hp * 1.0 / 2);
+				hp += 20;
+
+				if (hp > maxhp) {
+					hp = maxhp;
+				}
+				return true;
 			}
-			this.setOwner(from);
-			if (from != null) {
-				from.gainedNode(this);
-			}
-			hp = -hp;
-			return true;
 		}
 		return false;
 	}

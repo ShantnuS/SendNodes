@@ -22,7 +22,7 @@ public class Network {
 	private Random r = new Random();
 
 	public void addConnection(int x1, int y1, int x2, int y2) {
-		Connection conn = new Connection(node_grid[x1][y1], node_grid[x2][y2], 1);
+		Connection conn = new Connection(node_grid[x1][y1], node_grid[x2][y2], r.nextInt(15)+5);
 		node_grid[x1][y1].addConnection(conn);
 		node_grid[x2][y2].addConnection(conn);
 		connections.add(conn);
@@ -30,9 +30,9 @@ public class Network {
 
 	private Object getRandomSetValue(Set set) {
 		int noNodesAdded = set.size();
-		int item = r.nextInt(noNodesAdded); // In real life, the Random
-											// object should be rather more
-											// shared than this
+		int item = r.nextInt(noNodesAdded);
+											
+											
 		int j = 0;
 		for (Object obj : set) {
 			if (j == item)

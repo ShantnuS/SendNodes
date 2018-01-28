@@ -11,8 +11,11 @@ import powerups.PlayerPowerUp;
 
 public class Player {
 	private Node startingNode;
+	private boolean shield = false;
 	private int initial_ip = 5;
 	private int current_ip = 5;
+	private int loot = 0;
+	private int passiveLootGen = 0;
 
 	private ArrayList<Attack> attacks;
 	private ArrayList<PlayerPowerUp> powerups;
@@ -31,8 +34,24 @@ public class Player {
 		this.nodeTextureName = nodeTextureName;
 	}
 	
+	public void toggleShield(){
+		shield  = !shield;
+	}
+	
+	public void increasePassiveLootGen(int amount){
+		passiveLootGen += amount;
+	}
+	
+	public boolean getShieldStatus(){
+		return shield;
+	}
+	
 	public void gainedNode(Node node){
 		ownedNodes.add(node);
+	}
+	
+	public void giveLoot(int loot){
+		this.loot += loot;
 	}
 	
 	public void lostNode(Node node){
@@ -68,6 +87,8 @@ public class Player {
 
 	// TODO: Prioritise attacks??
 	private void attackTargets() {
+		loot+=passiveLootGen;
+		
 		int remainingIp = initial_ip;
 		ArrayList<Player> killedVictims = new ArrayList<Player>();
 		ArrayList<Attack> attacksToRemove = new ArrayList<Attack>();
@@ -84,7 +105,7 @@ public class Player {
 			System.out.println("test2");
 
 			// Go through every connection to the target
-			for (Connection conn : attack.getTarget().getConnections()) {
+			for (Connection conn: attack.getTarget().getConnections()) {
 
 				// Cap damage if over AD points
 				if (maxPossibleDamage > remainingIp) {
@@ -95,7 +116,10 @@ public class Player {
 				if (conn.getOtherNode(attack.getTarget()).getOwner() == this) {
 					Player victim = attack.getTarget().getOwner();
 					// Do all damage possible
-					if (maxPossibleDamage <= conn.getBandwidth()) {
+					System.out.println(maxPossibleDamage);
+					System.out.println(conn.getBandwidth());
+					
+					if (Math.abs(maxPossibleDamage) <= conn.getBandwidth()) {
 
 						boolean destroyed = attack.getTarget().adjustHealth(maxPossibleDamage, this);
 						if (destroyed) {
@@ -103,13 +127,14 @@ public class Player {
 							killedVictims.add(victim);
 						}
 
-						remainingIp -= maxPossibleDamage;
+						remainingIp -= Math.abs(maxPossibleDamage);
 						break;
 
 					}
 					// Throttle damage
 					else {
-						boolean destroyed = attack.getTarget().adjustHealth(conn.getBandwidth(), this);
+						System.out.println("throttle damage");
+						boolean destroyed = attack.getTarget().adjustHealth(Integer.signum(maxPossibleDamage) * conn.getBandwidth(), this);
 						remainingIp -= conn.getBandwidth();
 
 						if (destroyed) {
