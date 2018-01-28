@@ -66,6 +66,7 @@ public class GameController {
 	public void update() {
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
 			screenNumber = 0;
+			menuScreen.show();
 		}
 	
 		switch(screenNumber){

@@ -214,13 +214,8 @@ public class EntityManager {
 				GameController.getInstance().UI().showDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1],
 						map.getMap()[xNode][yNode], node_size[0], node_size[1], players.get(0));
 				clickedOnATarget = true;
-				
-				attackDialogue = new AttackDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1]);
-				Attack attack = new Attack(players.get(0), map.getMap()[xNode][yNode], -1);
-				if (!Attack.alreadyExists(players.get(0).getTargets(), attack)) {
-					System.out.println("3");
-					players.get(0).addTarget(attack);
-				}
+
+				GameController.getInstance().UI().reInitTargetList();
 			}
 		}
 		
@@ -255,4 +250,9 @@ public class EntityManager {
 		return players.get(player).getCPU();
 	}
 	
+	
+	public Player getPlayer1()
+	{
+		return players.get(0);
+	}
 }

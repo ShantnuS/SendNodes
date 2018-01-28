@@ -1,5 +1,7 @@
 package com.sendnodes.ui;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -35,9 +37,9 @@ public class UIManager {
 	
 	private Texture attackDialogueTexture;
 	
-	private Container dialogueContainer, dialogueSliderContainer;
+	private Container dialogueContainer, dialogueSliderContainer ;
 	
-	private GridContainer dialogueGridContainer;
+	private GridContainer dialogueGridContainer,targetList;
 	
 	private Label loadLabel;
 	
@@ -45,8 +47,7 @@ public class UIManager {
 		this.stage = stage;
 		
 		initialiseAttackDialogue();
-		
-		
+		initTargetList();
 		// initialising
 		showAttackDialogue = false;
 		
@@ -94,16 +95,91 @@ public class UIManager {
 		attackDialogueTexture = new Texture("UI/UI_node_menu.png");
 	}
 	
+	public void initTargetList()
+	{
+		targetList = new GridContainer();
+	}
+	
+	public void reInitTargetList()
+	{
+		int x = 500, y = 500;
+		targetList = new GridContainer();
+
+		Container tc = new Container(x,y, 100, 100, stage);
+		tc.addButton(ButtonMaker.getLabel("test"));  
+        
+        TextButton s1 = ButtonMaker.getBasicButton("Show");
+        s1.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	// show where the node is
+            }
+        });   
+        tc.addButton(s1);  
+        
+        s1 = ButtonMaker.getBasicButton("X");
+        s1.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	// GameController.getInstance().EM().getPlayer1().getTargets().remove(a);
+            	 // update render of list
+            	 reInitTargetList();
+            }
+        });   
+        tc.addButton(s1); 
+        tc.resizeActors(true);
+        
+        targetList.addContainer(tc);
+		
+		/*for(final Attack a : GameController.getInstance().EM().getPlayer1().getTargets())
+		{
+			Node target = a.getTarget();
+			Container tc = new Container(x,y, 100, 500, stage);
+			TextButton s1 = ButtonMaker.getBasicButton(target.getXPos() + " : " + target.getYPos());
+			tc.addButton(s1);   
+	        
+	        s1 = ButtonMaker.getBasicButton("Show");
+	        s1.addListener(new ChangeListener() {
+	            @Override
+	            public void changed (ChangeEvent event, Actor actor) {
+	            	// show where the node is
+	            }
+	        });   
+	        tc.addButton(s1);  
+	        
+	        s1 = ButtonMaker.getBasicButton("X");
+	        s1.addListener(new ChangeListener() {
+	            @Override
+	            public void changed (ChangeEvent event, Actor actor) {
+	            	 GameController.getInstance().EM().getPlayer1().getTargets().remove(a);
+	            	 // update render of list
+	            	 initTargetList();
+	            }
+	        });   
+	        tc.addButton(s1); 
+	        tc.resizeActors(true);
+	        
+	        targetList.addContainer(tc);
+		}*/
+		targetList.resizeActors(false);
+	}
+	
 	public void initialiseAttackDialogue(){
 		dialogueGridContainer = new GridContainer();
 		
 
+		
 		dialogueSliderContainer = new Container(-400,-400,200,100, stage);
 		TextButton s1 = ButtonMaker.getBasicButton("Up");
         s1.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-            	GameController.getInstance().setScreenNumber(1);
+            	ArrayList<Attack> attacks = attackDialogue.getPlayer().getTargets();
+            	
+            	// for each attack, see if the target node is the attack's target, if so, increment that attack's damage
+            	for (Attack a:attacks)
+            		if (a.getTarget() == attackDialogue.getQuery())
+            			a.incrementDamage();
             }
         });   
         dialogueSliderContainer.addButton(s1);   
@@ -118,22 +194,18 @@ public class UIManager {
         dialogueSliderContainer.addButton(s2);   
 		
 		
+        
 		dialogueContainer = new Container(-200,-200,50,50, stage);
 	     
+		// Clicking the attack triggers an expenditure of resources on the target node
         TextButton tb = ButtonMaker.getTexturedButton("", "PU_node_attack", "PU_node_attack");
         tb.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-            	//attackDialogue = new AttackDialogue(attackDialogue.getQuery().getXPos() * attackDialogue.getNodeWidth(), 
-            	//		attackDialogue.getQuery().getYPos() * attackDialogue.getNodeHeight());
-            	
-            	System.out.println(attackDialogue.getPlayer());
-            	System.out.println(attackDialogue.getQuery());
 				Attack attack = new Attack(attackDialogue.getPlayer(), attackDialogue.getQuery(), -1);
-				if (!Attack.alreadyExists(attackDialogue.getPlayer().getTargets(), attack)) {
-					System.out.println("3");
+				
+				if (!Attack.alreadyExists(attackDialogue.getPlayer().getTargets(), attack))
 					attackDialogue.getPlayer().addTarget(attack);
-				}
             }
         });   
         dialogueContainer.addButton(tb);        
@@ -157,6 +229,7 @@ public class UIManager {
         dialogueContainer.addButton(tb);
         dialogueContainer.resizeActors(true);
         
+        
 
 		dialogueGridContainer.addContainer(dialogueSliderContainer);
 		dialogueGridContainer.addContainer(dialogueContainer);
@@ -179,7 +252,7 @@ public class UIManager {
 			int x = Gdx.input.getX();
 			int y = Gdx.input.getY();
 			
-			GameController.getInstance().EM().registerRightClick(x, y);
+			//GameController.getInstance().EM().registerRightClick(x, y);
 			
 			GameController.getInstance().getSoundManager().playSound(SoundManager.SOUNDS.CLICK.ordinal());
 		}
@@ -192,11 +265,17 @@ public class UIManager {
 			dialogueGridContainer.render(batch);
 			//attackDialogue.render(batch, attackDialogueTexture);
 		}
-		
+		targetList.render(batch);
 		stage.draw();
 	}
 	
 	public void showDialogue(int x, int y, Node n, int nodeWidth, int nodeHeight, Player p){
+		
+		if (x<100)
+			x = 100;
+		if (y<250)
+			y = 250;
+		
 		System.out.println("tre");
 		dialogueContainer.move(x, y-100, true);
 		dialogueSliderContainer.move(x, y-200, true);
