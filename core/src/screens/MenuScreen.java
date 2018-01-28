@@ -53,6 +53,7 @@ public class MenuScreen {
             }
         });   
         container.addButton(tb);
+        
         container.resizeActors();
         
 /*		uiContainer = new UIContainer(Properties.SCREEN_WIDTH/2-100,Properties.SCREEN_HEIGHT* 3/4);
@@ -93,7 +94,6 @@ public class MenuScreen {
         uiContainer.addContainer(container);
         
         uiContainer.resizeActors();*/
-        
 	}
 
 	

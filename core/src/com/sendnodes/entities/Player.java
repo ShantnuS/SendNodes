@@ -56,6 +56,10 @@ public class Player {
 		current_ip = Network.calculateInfluence(this) + initial_ip;
 		attacks = Network.pruneAttacks(this, attacks);
 	}
+	
+	public int getCPU(){
+		return current_ip;
+	}
 
 	// TODO: Prioritise attacks??
 	private void attackTargets() {
@@ -71,6 +75,7 @@ public class Player {
 			if (remainingIp <= 0) {
 				break;
 			}
+			
 			System.out.println("test2");
 
 			// Go through every connection to the target

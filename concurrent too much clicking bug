@@ -1,0 +1,14 @@
+Exception in thread "LWJGL Application" java.util.ConcurrentModificationException
+	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:907)
+	at java.util.ArrayList$Itr.next(ArrayList.java:857)
+	at com.sendnodes.entities.Player.attackTargets(Player.java:67)
+	at com.sendnodes.entities.Player.update(Player.java:52)
+	at com.sendnodes.entities.EntityManager.update(EntityManager.java:95)
+	at com.sendnodes.GameController.update(GameController.java:62)
+	at com.sendnodes.Core.render(Core.java:25)
+	at com.badlogic.gdx.backends.lwjgl.LwjglApplication.mainLoop(LwjglApplication.java:225)
+	at com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run(LwjglApplication.java:126)
+[xcb] Unknown request in queue while dequeuing
+[xcb] Most likely this is a multi-threaded client and XInitThreads has not been called
+[xcb] Aborting, sorry about that.
+java: xcb_io.c:165: dequeue_pending_request: Assertion `!xcb_xlib_unknown_req_in_deq' failed.

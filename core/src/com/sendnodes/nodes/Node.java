@@ -64,7 +64,6 @@ public class Node {
 
 	public boolean adjustHealth(int health, Player from) {
 		this.hp += health;
-		System.out.println("Health adjusted to " + this.hp);
 		if (hp < 0) {
 			Player oldPlayer = this.getOwner();
 			if (this.getOwner() != null) {
@@ -75,7 +74,6 @@ public class Node {
 				from.gainedNode(this);
 			}
 			hp = -hp;
-			System.out.print("Player destroyed");
 			return true;
 		}
 		return false;
