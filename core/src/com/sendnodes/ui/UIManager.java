@@ -29,7 +29,10 @@ public class UIManager {
 	private boolean showAttackDialogue;
 	
 	private Texture attackDialogueTexture;
-	private Container dialogueContainer;
+	
+	private Container dialogueContainer, dialogueSliderContainer;
+	
+	private GridContainer dialogueGridContainer;
 	
 	public UIManager(){
 		initialiseAttackDialogue();
@@ -73,6 +76,29 @@ public class UIManager {
 	}
 	
 	public void initialiseAttackDialogue(){
+		dialogueGridContainer = new GridContainer();
+		
+
+		dialogueSliderContainer = new Container(-400,-400,200,100);
+		TextButton s1 = ButtonMaker.getBasicButton("Up");
+        s1.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	GameController.getInstance().setScreenNumber(1);
+            }
+        });   
+        dialogueSliderContainer.addButton(s1);   
+        
+        TextButton s2 = ButtonMaker.getBasicButton("Down");
+        s2.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	GameController.getInstance().setScreenNumber(1);
+            }
+        });   
+        dialogueSliderContainer.addButton(s2);   
+		
+		
 		dialogueContainer = new Container(-400,-400,200,100);
 	     
         TextButton tb = ButtonMaker.getBasicButton("Play");
@@ -102,6 +128,10 @@ public class UIManager {
         });   
         dialogueContainer.addButton(tb);
         dialogueContainer.resizeActors(true);
+        
+
+		dialogueGridContainer.addContainer(dialogueSliderContainer);
+		dialogueGridContainer.addContainer(dialogueContainer);
 	}
 	public void update(){
 		if(!Gdx.input.isButtonPressed(Input.Buttons.LEFT) && clickedDownLeft == true){
@@ -127,7 +157,8 @@ public class UIManager {
 	
 	public void render(SpriteBatch batch){
 		if (showAttackDialogue){
-			dialogueContainer.render(batch);
+			//dialogueContainer.render(batch);
+			dialogueGridContainer.render(batch);
 			//attackDialogue.render(batch, attackDialogueTexture);
 		}
 	}
@@ -135,6 +166,7 @@ public class UIManager {
 	public void showDialogue(int x, int y){
 		System.out.println("tre");
 		dialogueContainer.move(x, y-100, true);
+		dialogueSliderContainer.move(x, y-200, true);
 		
 		//attackDialogue.setPos(-1, -1);
 		showAttackDialogue = true;
@@ -142,6 +174,7 @@ public class UIManager {
 	
 	public void hideDialogue(){
 		dialogueContainer.move(-400, -400, true);
+		dialogueSliderContainer.move(-400, -400, true);
 		//attackDialogue.setPos(-200, -100);
 		showAttackDialogue = false;
 	}
