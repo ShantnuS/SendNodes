@@ -49,7 +49,6 @@ public class GameController {
 	}
 	
 	public static GameController getInstance() {
-		System.out.println("getting");
 		return instance;
 	}
 	

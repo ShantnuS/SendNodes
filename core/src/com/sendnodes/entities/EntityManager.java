@@ -166,7 +166,13 @@ public class EntityManager {
 
 		int xNode = (int) Math.floor(x / node_size[0]);
 		int yNode = (int) Math.floor(y / node_size[1]);
-		System.out.print(xNode + " " + yNode);
+		
+		if(xNode>map.getMap().length-1){
+			xNode = map.getMap().length-1;
+		}
+		if(yNode>map.getMap()[0].length-1){
+			yNode = map.getMap()[0].length-1;
+		}
 		
 		boolean clickedOnATarget = false;
 		if (map.getMap()[xNode][yNode] != null) {
@@ -200,6 +206,13 @@ public class EntityManager {
 
 		int xNode = (int) Math.floor(x / node_size[0]);
 		int yNode = (int) Math.floor(y / node_size[1]);
+		
+		if(xNode>map.getMap().length-1){
+			xNode = map.getMap().length-1;
+		}
+		if(yNode>map.getMap()[0].length-1){
+			yNode = map.getMap()[0].length-1;
+		}
 		System.out.print(xNode + " " + yNode);
 		if (map.getMap()[xNode][yNode] != null) {
 			map.getMap()[xNode][yNode].setOwner(players.get(1));
