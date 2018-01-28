@@ -133,9 +133,9 @@ public class EntityManager {
 				sr.setColor(Color.GREEN);
 			}
 			
-/*			Color colour = new Color();
-			float value = c.getBandwidth()*50;
-			sr.setColor(colour.fromHsv(50, 50, value));*/
+		
+/*			float value = c.getBandwidth();
+			sr.setColor(new Color(50.0f,50.0f,value,1));*/
 			
 			//sr.setColor(1, 1, 1, 1);
 			sr.line(getLinePoint(c, 0, true), getLinePoint(c, 0, false), getLinePoint(c, 1, true),
