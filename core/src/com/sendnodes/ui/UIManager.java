@@ -77,6 +77,17 @@ public class UIManager {
 		attackButtonStyle.down = skin.getDrawable("UI_menu_button_down");
         
         //textButtonStyle.checked = skin.getDrawable("test02");
+        TextButton attackButton = new TextButton("", attackButtonStyle);
+        attackButton.setPosition(50, 70);
+        stage.addActor(attackButton);
+		
+        attackButton.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	GameController.getInstance().setScreenNumber(1);
+                System.out.println("Attack");
+            }
+        }); 
         
 		this.attackDialogue = new AttackDialogue(-100, -100);
 		
