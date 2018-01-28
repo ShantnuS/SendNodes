@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.sendnodes.Network;
+import com.sendnodes.Statistics;
 import com.sendnodes.nodes.Connection;
 import com.sendnodes.nodes.Node;
 
@@ -22,6 +23,8 @@ public class Player {
 	private ArrayList<Node> ownedNodes = new ArrayList<Node>();
 	
 	private String playerTextureName, nodeTextureName;
+	
+	Statistics stats;
 
 	public Player(Node startNode, String playerTextureName, String nodeTextureName) {
 		startingNode = startNode;
@@ -32,6 +35,11 @@ public class Player {
 		
 		this.playerTextureName = playerTextureName;
 		this.nodeTextureName = nodeTextureName;
+		stats = new Statistics();
+	}
+	
+	public Statistics getStats() {
+		return stats;
 	}
 	
 	public void toggleShield(){

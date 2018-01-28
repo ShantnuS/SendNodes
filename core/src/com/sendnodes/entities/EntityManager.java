@@ -2,18 +2,13 @@ package com.sendnodes.entities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -132,6 +127,10 @@ public class EntityManager {
 			if(c.getBandwidth() >= 15) {
 				sr.setColor(Color.GREEN);
 			}
+			
+/*			Color colour = new Color();
+			float value = c.getBandwidth()*50;
+			sr.setColor(colour.fromHsv(50, 50, value));*/
 			
 			//sr.setColor(1, 1, 1, 1);
 			sr.line(getLinePoint(c, 0, true), getLinePoint(c, 0, false), getLinePoint(c, 1, true),
