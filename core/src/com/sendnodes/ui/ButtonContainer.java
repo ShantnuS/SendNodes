@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.sendnodes.Properties;
 
-public class Container {
+public class ButtonContainer extends UIObject{
 
 	ArrayList<TextButton> buttons;
 	int posX;
@@ -22,7 +22,7 @@ public class Container {
 	int bSizeY;
 	boolean isLandscape =false;
 	
-	public Container(int posX, int posY, int sizeX, int sizeY, int bSizeX, int bSizeY) {
+	public ButtonContainer(int posX, int posY, int sizeX, int sizeY, int bSizeX, int bSizeY) {
 		buttons = new ArrayList<TextButton>();
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
@@ -67,6 +67,12 @@ public class Container {
 			counter++;
 			stage.addActor(b);
 		}
+	}
+	
+	public void setPosition(int x, int y)
+	{
+		posX = x;
+		posY = y;
 	}
 	
 	public void setIsLandscape(boolean x) {
