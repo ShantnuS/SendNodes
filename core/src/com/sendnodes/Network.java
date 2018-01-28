@@ -31,8 +31,7 @@ public class Network {
 	private Object getRandomSetValue(Set set) {
 		int noNodesAdded = set.size();
 		int item = r.nextInt(noNodesAdded);
-											
-											
+												
 		int j = 0;
 		for (Object obj : set) {
 			if (j == item)
@@ -268,6 +267,10 @@ public class Network {
 		return node_grid;
 	}
 
+	public ArrayList<Node> getNodes(){
+		return nodes;
+	}
+	
 	public ArrayList<Node> getMapNodesList() {
 		return nodes;
 	}

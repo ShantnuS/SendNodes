@@ -28,4 +28,8 @@ public class Statistics {
 		nodesCaptured++;
 	}
 	
+	public void addTimeAlive(long time) {
+		timeAlive += time;
+	}
+	
 }
