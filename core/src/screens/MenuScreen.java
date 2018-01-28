@@ -19,13 +19,12 @@ public class MenuScreen {
     Stage stage;   
     ButtonContainer container;
 	
-	public MenuScreen() {
-		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);
+	public MenuScreen(Stage stage) {
+		this.stage = stage;
 	}
 	
 	public void create() {
-        container = new ButtonContainer(Properties.SCREEN_WIDTH/2-100,Properties.SCREEN_HEIGHT* 3/4,200,Properties.SCREEN_HEIGHT/2,200,100);
+        container = new ButtonContainer(Properties.SCREEN_WIDTH/2-100,Properties.SCREEN_HEIGHT* 3/4,200,Properties.SCREEN_HEIGHT/2,200,100, stage);
      
         TextButton tb = ButtonMaker.getBasicButton("Play");
         tb.addListener(new ChangeListener() {

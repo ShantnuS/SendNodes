@@ -38,11 +38,11 @@ public class UIManager {
 	
 	private Label loadLabel;
 	
-	public UIManager(){
+	public UIManager(Stage stage){
+		this.stage = stage;
+		
 		initialiseAttackDialogue();
 		
-		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);
 		
 		// initialising
 		showAttackDialogue = false;
@@ -95,7 +95,7 @@ public class UIManager {
 		dialogueGridContainer = new GridContainer();
 		
 
-		dialogueSliderContainer = new Container(-400,-400,200,100);
+		dialogueSliderContainer = new Container(-400,-400,200,100, stage);
 		TextButton s1 = ButtonMaker.getBasicButton("Up");
         s1.addListener(new ChangeListener() {
             @Override
@@ -115,12 +115,13 @@ public class UIManager {
         dialogueSliderContainer.addButton(s2);   
 		
 		
-		dialogueContainer = new Container(-400,-400,200,100);
+		dialogueContainer = new Container(-400,-400,200,100, stage);
 	     
         TextButton tb = ButtonMaker.getBasicButton("Play");
         tb.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
+            	System.out.println("winning");
             	GameController.getInstance().setScreenNumber(1);
             }
         });   
@@ -130,6 +131,7 @@ public class UIManager {
         tb.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
+            	System.out.println("winning");
             	//GameController.getInstance().setScreenNumber(1);
             }
         });   
@@ -139,6 +141,7 @@ public class UIManager {
         tb.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
+            	System.out.println("winning");
             	System.exit(0);
             }
         });   

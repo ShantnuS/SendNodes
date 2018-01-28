@@ -1,6 +1,8 @@
 package com.sendnodes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.sendnodes.entities.EntityManager;
 import com.sendnodes.ui.UIManager;
 
@@ -28,6 +30,8 @@ public class GameController {
 	private UIManager uiManager;
 	private Statistics stats;
 	
+	private Stage stage;
+	
 	public Statistics getStats() {
 		return stats;
 	}
@@ -35,11 +39,14 @@ public class GameController {
 	public static final GameController instance = new GameController(Properties.DEFAULT_MAP_SIZE);
 	
 	public GameController(int map_size) {
+		stage = new Stage();
+		Gdx.input.setInputProcessor(stage);
+		
 		System.out.println("initialising");
+		menuScreen = new MenuScreen(stage);
+		uiManager = new UIManager(stage);
 		entityManager = new EntityManager(map_size);
-		menuScreen = new MenuScreen();
 		soundManager = new SoundManager();
-		uiManager = new UIManager();
 		stats = new Statistics();
 		screenNumber = 0;
 	}
