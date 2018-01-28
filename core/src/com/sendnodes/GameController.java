@@ -8,6 +8,7 @@ import com.sendnodes.entities.EntityManager;
 import com.sendnodes.ui.UIManager;
 
 import screens.MenuScreen;
+import soundengine.MusicManager;
 import soundengine.SoundManager;
 
 public class GameController {
@@ -28,6 +29,7 @@ public class GameController {
 	
 	
 	private SoundManager soundManager;
+	private MusicManager musicManager;
 	private UIManager uiManager;
 	
 	private Stage stage;
@@ -45,7 +47,7 @@ public class GameController {
 		soundManager = new SoundManager();
 		screenNumber = 0;
 		
-		
+		musicManager = new MusicManager();		
 	}
 	
 	public void setScreenNumber(int num) {
