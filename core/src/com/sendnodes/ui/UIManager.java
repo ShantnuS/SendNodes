@@ -14,11 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.sendnodes.GameController;
+import com.sendnodes.Properties;
 
 import soundengine.SoundManager;
 
 public class UIManager {
-	private boolean clickedDown = false;
+	private boolean clickedDownLeft = false;
+	private boolean clickedDownRight = false;
 	private AttackDialogue attackDialogue;
 	private TextureAtlas atlas;
 	
@@ -27,8 +29,10 @@ public class UIManager {
 	private boolean showAttackDialogue;
 	
 	private Texture attackDialogueTexture;
+	private Container dialogueContainer;
 	
 	public UIManager(){
+		initialiseAttackDialogue();
 		
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
@@ -68,21 +72,64 @@ public class UIManager {
 		attackDialogueTexture = new Texture("UI/UI_node_menu.png");
 	}
 	
+	public void initialiseAttackDialogue(){
+		dialogueContainer = new Container(Properties.SCREEN_WIDTH/2-100,Properties.SCREEN_HEIGHT* 3/4,200,Properties.SCREEN_HEIGHT/2,200,100);
+	     
+        TextButton tb = ButtonMaker.getBasicButton("Play");
+        tb.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	GameController.getInstance().setScreenNumber(1);
+            }
+        });   
+        dialogueContainer.addButton(tb);        
+        
+        tb = ButtonMaker.getBasicButton("Settings");
+        tb.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	//GameController.getInstance().setScreenNumber(1);
+            }
+        });   
+        dialogueContainer.addButton(tb);
+        
+        tb = ButtonMaker.getBasicButton("Exit");
+        tb.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+            	System.exit(0);
+            }
+        });   
+        dialogueContainer.addButton(tb);
+        dialogueContainer.resizeActors(false);
+	}
+	
 	public void update(){
-		if(!Gdx.input.isButtonPressed(Input.Buttons.LEFT) && clickedDown == true){
+		if(!Gdx.input.isButtonPressed(Input.Buttons.LEFT) && clickedDownLeft == true){
 			int x = Gdx.input.getX();
 			int y = Gdx.input.getY();
 			
-			GameController.getInstance().EM().registerClick(x, y);
+			GameController.getInstance().EM().registerLeftClick(x, y);
 			
 			GameController.getInstance().getSoundManager().playSound(SoundManager.SOUNDS.CLICK.ordinal());
 		}
-		clickedDown = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
+		clickedDownLeft = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
+		
+		if(!Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && clickedDownRight == true){
+			int x = Gdx.input.getX();
+			int y = Gdx.input.getY();
+			
+			GameController.getInstance().EM().registerRightClick(x, y);
+			
+			GameController.getInstance().getSoundManager().playSound(SoundManager.SOUNDS.CLICK.ordinal());
+		}
+		clickedDownRight = Gdx.input.isButtonPressed(Input.Buttons.RIGHT);
 	}
 	
 	public void render(SpriteBatch batch){
 		if (showAttackDialogue){
-			attackDialogue.render(batch, attackDialogueTexture);
+			dialogueContainer.render(batch);
+			//attackDialogue.render(batch, attackDialogueTexture);
 		}
 	}
 	

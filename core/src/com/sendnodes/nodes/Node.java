@@ -2,6 +2,7 @@ package com.sendnodes.nodes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -20,7 +21,7 @@ import powerups.NodePowerUp;
 
 public class Node {
 	private ArrayList<Connection> connections;
-	private int hp = 300;
+	private int hp = new Random().nextInt(45)+5;
 	private int shield;
 	private Player player;
 	private List<Node> latestPipePath;

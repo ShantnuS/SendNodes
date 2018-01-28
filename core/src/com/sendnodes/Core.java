@@ -21,6 +21,7 @@ public class Core extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+
 		controller.update();
 //		System.out.println("      =");
 //		System.out.println("     ===");
@@ -49,7 +50,6 @@ public class Core extends ApplicationAdapter {
 //		System.out.println("    | ||       ");
 //		System.out.println("    |_||__        ");
 //		System.out.println("    (____))    ");
-
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
