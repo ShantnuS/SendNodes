@@ -8,6 +8,7 @@ import com.sendnodes.entities.EntityManager;
 import com.sendnodes.ui.UIManager;
 
 import screens.MenuScreen;
+import soundengine.MusicManager;
 import soundengine.SoundManager;
 
 public class GameController {
@@ -28,15 +29,11 @@ public class GameController {
 	
 	
 	private SoundManager soundManager;
+	private MusicManager musicManager;
 	private UIManager uiManager;
-	private Statistics stats;
 	
 	private Stage stage;
 	
-	public Statistics getStats() {
-		return stats;
-	}
-
 	public static final GameController instance = new GameController(Properties.DEFAULT_MAP_SIZE);
 	
 	public GameController(int map_size) {
@@ -48,10 +45,9 @@ public class GameController {
 		uiManager = new UIManager(stage);
 		entityManager = new EntityManager(map_size);
 		soundManager = new SoundManager();
-		stats = new Statistics();
 		screenNumber = 0;
 		
-		
+		musicManager = new MusicManager();		
 	}
 	
 	public void setScreenNumber(int num) {
