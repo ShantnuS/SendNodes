@@ -17,13 +17,18 @@ public class Player {
 	private ArrayList<Attack> attacks;
 	private ArrayList<PlayerPowerUp> powerups;
 	private ArrayList<Node> ownedNodes = new ArrayList<Node>();
+	
+	private String playerTextureName, nodeTextureName;
 
-	public Player(Node startNode) {
+	public Player(Node startNode, String playerTextureName, String nodeTextureName) {
 		startingNode = startNode;
 		ownedNodes.add(startNode);
 		attacks = new ArrayList<Attack>();
 		powerups = new ArrayList<PlayerPowerUp>();
 		System.out.println("x:" + startingNode.getXPos() + " y:" + startingNode.getYPos());
+		
+		this.playerTextureName = playerTextureName;
+		this.nodeTextureName = nodeTextureName;
 	}
 	
 	public void gainedNode(Node node){
@@ -149,5 +154,13 @@ public class Player {
 
 	public int getInitialInfluence() {
 		return initial_ip;
+	}
+	
+	public String getPlayerTextureName(){
+		return playerTextureName;
+	}
+	
+	public String getNodeTextureName(){
+		return nodeTextureName;
 	}
 }
