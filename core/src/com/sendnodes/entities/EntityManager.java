@@ -15,14 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.sendnodes.GameController;
 import com.sendnodes.Network;
 import com.sendnodes.Properties;
 import com.sendnodes.nodes.Connection;
 import com.sendnodes.nodes.Node;
+import com.sendnodes.ui.AttackDialogue;
 
 public class EntityManager {
 	private HashMap<String, Texture> images;
@@ -39,7 +37,34 @@ public class EntityManager {
 	
     Stage stage;
     
-    private void addLabels(Network map){
+    private AttackDialogue attackDialogue;
+    
+    
+	public EntityManager(int map_size) {
+    	attackDialogue = null;
+		node_size = new int[2];
+		node_size[0] = Properties.SCREEN_WIDTH/map_size;
+		node_size[1] = Properties.SCREEN_HEIGHT/map_size;
+		
+		images = new HashMap<String, Texture>();
+		images.put("node_blue", new Texture("Nodes/Node_blue.png"));
+		images.put("node_red", new Texture("Nodes/Node_red.png"));
+		images.put("node_blue", new Texture("Nodes/Node_blue.png"));
+		images.put("node_grey", new Texture("Nodes/Node_grey.png"));
+
+		map = new Network(map_size);
+		addLabels(map);
+		players = new ArrayList<Player>();
+		players.add(new Player(map.getRandomNode()));
+		players.get(0).getNode().setOwner(players.get(0));
+		
+		tile_size = images.get("node_blue").getWidth()*Properties.GRAPHICS_SCALE;
+		
+		sr = new ShapeRenderer();
+	}
+	
+	private void addLabels(Network map){
+    	
     	stage = new Stage();
     	labels = new ArrayList<Label>();
     	
@@ -57,28 +82,6 @@ public class EntityManager {
 	        labels.add(testLabel);
 		}
     }
-	public EntityManager(int map_size) {
-		node_size = new int[2];
-		node_size[0] = Properties.SCREEN_WIDTH/map_size;
-		node_size[1] = Properties.SCREEN_HEIGHT/map_size;
-		
-		images = new HashMap<String, Texture>();
-		images.put("node_blue", new Texture("Nodes/Node_blue.png"));
-		images.put("node_red", new Texture("Nodes/Node_red.png"));
-		images.put("node_blue", new Texture("Nodes/Node_blue.png"));
-		images.put("node_grey", new Texture("Nodes/Node_grey.png"));
-
-		map = new Network(map_size);
-		addLabels(map);
-		players = new ArrayList<Player>();
-		players.add(new Player(map.getRandomNode()));
-		players.get(0).getNode().setOwner(players.get(0));
-
-		
-		tile_size = images.get("node_blue").getWidth()*Properties.GRAPHICS_SCALE;
-		
-		sr = new ShapeRenderer();
-	}
 
 	public void update() {
 		for (Player player : players) {
@@ -157,11 +160,13 @@ public class EntityManager {
 		int yNode = (int) Math.floor(y / node_size[1]);
 		System.out.print(xNode + " " + yNode);
 		if (map.getMap()[xNode][yNode] != null) {
-			System.out.println("1");
-			System.out.println(map.isConnected(players.get(0), players.get(0).getNode(), map.getMap()[xNode][yNode]));
 			if (map.getMap()[xNode][yNode].getOwner() != players.get(0) 
 					&& map.isConnected(players.get(0), players.get(0).getNode(), map.getMap()[xNode][yNode])) {
-				System.out.println("2");
+				
+				System.out.println("menu should open");
+				GameController.getInstance().UI().showDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1]);
+				
+				attackDialogue = new AttackDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1]);
 				Attack attack = new Attack(players.get(0), map.getMap()[xNode][yNode], -1);
 				if (!Attack.alreadyExists(players.get(0).getTargets(), attack)) {
 					System.out.println("3");

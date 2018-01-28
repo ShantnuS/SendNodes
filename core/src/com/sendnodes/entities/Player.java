@@ -52,22 +52,16 @@ public class Player {
 			if(remainingIp <= 0){
 				break;
 			}
-			System.out.println("test2");
+
 			for(Connection conn:attack.getTarget().getConnections()) {
-				System.out.println("Amount to damage target " + amountToDamageTarget);
-				
-				System.out.println("Remaining IP " + remainingIp);
-				System.out.println(conn.getOtherNode(attack.getTarget()));
-				System.out.println(conn.getOtherNode(this.getNode()));
-				System.out.println(this);
 				
 				if(amountToDamageTarget>remainingIp){
-					System.out.println("test4");
+
 					amountToDamageTarget = remainingIp;
 				}
 				if(conn.getOtherNode(attack.getTarget()).getOwner() == this) {
 					if(amountToDamageTarget<=conn.getBandwidth()) {
-						System.out.println("test5");
+
 						boolean destroyed = attack.getTarget().adjustHealth(amountToDamageTarget, this);
 						if(destroyed){
 							iterAttack.remove();
@@ -76,7 +70,7 @@ public class Player {
 						amountToDamageTarget-=amountToDamageTarget;
 						remainingIp-=amountToDamageTarget;
 					}else {
-						System.out.println("test6");
+
 						boolean destroyed = attack.getTarget().adjustHealth(conn.getBandwidth(), this);
 						if(destroyed){
 							iterAttack.remove();

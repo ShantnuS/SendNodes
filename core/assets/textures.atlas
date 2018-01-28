@@ -1,0 +1,201 @@
+
+textures.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+UI_menu
+  rotate: false
+  xy: 1, 105
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+UI_node_menu
+  rotate: false
+  xy: 1, 53
+  size: 86, 50
+  orig: 86, 50
+  offset: 0, 0
+  index: -1
+slider
+  rotate: false
+  xy: 153, 246
+  size: 62, 9
+  orig: 62, 9
+  offset: 0, 0
+  index: -1
+UI_pause_down
+  rotate: false
+  xy: 1, 19
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+King_node_red
+  rotate: false
+  xy: 89, 71
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+King_node_blue
+  rotate: false
+  xy: 153, 212
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+UI_pause_up
+  rotate: false
+  xy: 35, 19
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+King_node_green
+  rotate: false
+  xy: 153, 178
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+PU_fast_forward
+  rotate: false
+  xy: 1, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+PU_node_defence
+  rotate: false
+  xy: 19, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+Node_green
+  rotate: false
+  xy: 37, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+Menu_sound_off
+  rotate: false
+  xy: 55, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+UI_menu_button_down
+  rotate: false
+  xy: 89, 58
+  size: 29, 11
+  orig: 29, 11
+  offset: 0, 0
+  index: -1
+UI_menu_button_up
+  rotate: false
+  xy: 217, 246
+  size: 27, 9
+  orig: 27, 9
+  offset: 0, 0
+  index: -1
+Influence_points
+  rotate: false
+  xy: 123, 85
+  size: 17, 18
+  orig: 17, 18
+  offset: 0, 0
+  index: -1
+health
+  rotate: false
+  xy: 187, 226
+  size: 17, 18
+  orig: 17, 18
+  offset: 0, 0
+  index: 50
+health_empty
+  rotate: false
+  xy: 153, 158
+  size: 17, 18
+  orig: 17, 18
+  offset: 0, 0
+  index: -1
+health
+  rotate: false
+  xy: 69, 33
+  size: 17, 18
+  orig: 17, 18
+  offset: 0, 0
+  index: 25
+Node_grey
+  rotate: false
+  xy: 187, 206
+  size: 17, 18
+  orig: 17, 18
+  offset: 0, 0
+  index: -1
+health
+  rotate: false
+  xy: 206, 226
+  size: 17, 18
+  orig: 17, 18
+  offset: 0, 0
+  index: 75
+health_full
+  rotate: false
+  xy: 153, 138
+  size: 17, 18
+  orig: 17, 18
+  offset: 0, 0
+  index: -1
+Node_red
+  rotate: false
+  xy: 187, 188
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+PU_health
+  rotate: false
+  xy: 206, 208
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+PU_node_attack
+  rotate: false
+  xy: 225, 228
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+PU_node_interference
+  rotate: false
+  xy: 153, 120
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+Menu_sound_on
+  rotate: false
+  xy: 172, 160
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+Node_blue
+  rotate: false
+  xy: 172, 142
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+slider_icon
+  rotate: false
+  xy: 246, 248
+  size: 7, 7
+  orig: 7, 7
+  offset: 0, 0
+  index: -1

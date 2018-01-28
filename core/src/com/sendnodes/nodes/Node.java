@@ -62,7 +62,6 @@ public class Node {
 
 	public boolean adjustHealth(int health, Player from) {
 		this.hp += health;
-		System.out.println("Health adjusted to " + this.hp);
 		if (hp < 0) {
 			Player oldPlayer = this.player;
 			this.player = from;
@@ -73,7 +72,6 @@ public class Node {
 				oldPlayer.recalculateInfluence();
 			}
 			hp = -hp;
-			System.out.print("Player destroyed");
 			return true;
 		}
 		return false;
