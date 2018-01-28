@@ -163,10 +163,7 @@ public class EntityManager {
 //			System.out.println(p.getPlayerTextureName());
 //			batch.draw(images.get(p.getPlayerTextureName()), (p.getX() * node_size[0])-(tile_size/2), (p.getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
 //		}
-		
-		System.out.println(((players.get(0).getX() * node_size[0])-(tile_size/2)) + ":" + ((players.get(0).getY() * node_size[1])-(tile_size/2)));
-		System.out.println(((players.get(1).getX() * node_size[0])-(tile_size/2)) + ":" + ((players.get(1).getY() * node_size[1])-(tile_size/2)));
-		//System.out.println();
+	
 		batch.draw(images.get("node_player_blue"), (players.get(0).getX() * node_size[0])-(tile_size/2), (players.get(0).getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
 		batch.draw(images.get("node_player_red"), (players.get(1).getX() * node_size[0])-(tile_size/2), (players.get(1).getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
 		
