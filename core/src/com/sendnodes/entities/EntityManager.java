@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -121,7 +122,18 @@ public class EntityManager {
 		sr.begin(ShapeType.Line);
 
 		for (Connection c : map.getConnections()) {
-			sr.setColor(1, 1, 1, 1);
+			//Set line colour depending on bandwidth
+			if(c.getBandwidth() <= 10) {
+				sr.setColor(Color.RED);
+			}
+			if(c.getBandwidth() > 10 && c.getBandwidth() <=14) {
+				sr.setColor(Color.YELLOW);
+			}
+			if(c.getBandwidth() >= 15) {
+				sr.setColor(Color.GREEN);
+			}
+			
+			//sr.setColor(1, 1, 1, 1);
 			sr.line(getLinePoint(c, 0, true), getLinePoint(c, 0, false), getLinePoint(c, 1, true),
 					getLinePoint(c, 1, false));
 
