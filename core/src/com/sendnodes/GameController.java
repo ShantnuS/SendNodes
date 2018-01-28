@@ -62,7 +62,6 @@ public class GameController {
 	}
 	
 	public void update() {
-		System.out.println(Gdx.input.isKeyPressed(Input.Keys.ESCAPE));
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
 			screenNumber = 0;
 		}
