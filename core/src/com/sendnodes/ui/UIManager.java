@@ -36,10 +36,15 @@ public class UIManager {
 	private boolean showAttackDialogue;
 	
 	private Texture attackDialogueTexture;
+	private Texture containerTexture;
 	
-	private Container dialogueContainer, dialogueSliderContainer ;
+	private Container dialogueContainer, dialogueSliderContainer;
+	private Container container1, container2;
 	
 	private GridContainer dialogueGridContainer,targetList;
+	private GridContainer gridContainer;
+	
+	Container tc;
 	
 	private Label loadLabel;
 	
@@ -47,6 +52,8 @@ public class UIManager {
 		this.stage = stage;
 		
 		initialiseAttackDialogue();
+		initialiseSideDialogue();
+		
 		initTargetList();
 		// initialising
 		showAttackDialogue = false;
@@ -89,74 +96,63 @@ public class UIManager {
 		targetList = new GridContainer();
 	}
 	
-	public void reInitTargetList()
-	{
-		int x = 500, y = 500;
-		targetList = new GridContainer();
+	public void initialiseSideDialogue(){
+		gridContainer = new GridContainer();
 
-		Container tc = new Container(x,y, 100, 100, stage);
-		tc.addButton(ButtonMaker.getLabel("test"));  
-        
-        TextButton s1 = ButtonMaker.getBasicButton("Show");
+		container2 = new Container(Properties.SCREEN_WIDTH-200,Properties.SCREEN_HEIGHT-400, 100, 100, stage);
+		TextButton s1 = ButtonMaker.getTexturedButton("", "PU_node_defence", "PU_node_defence");
         s1.addListener(new ChangeListener() {
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
-            	// show where the node is
-            }
-        });   
-        tc.addButton(s1);  
+            public void changed (ChangeEvent event, Actor actor) {}
+        });     
         
-        s1 = ButtonMaker.getBasicButton("X");
-        s1.addListener(new ChangeListener() {
+        TextButton s2 = ButtonMaker.getBasicButton("Show");
+        s2.addListener(new ChangeListener() {
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
-            	// GameController.getInstance().EM().getPlayer1().getTargets().remove(a);
-            	 // update render of list
-            	 reInitTargetList();
-            }
-        });   
-        tc.addButton(s1); 
-        tc.resizeActors(true);
+            public void changed (ChangeEvent event, Actor actor) {}
+        });     
         
-        targetList.addContainer(tc);
+        TextButton s3 = ButtonMaker.getBasicButton("X");
+        s2.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {}
+        });   
+        container2.addButton(s3); 
+        container2.addButton(s2); 
+        container2.addButton(s1); 
+        container2.resizeActors(true);
 		
-		/*for(final Attack a : GameController.getInstance().EM().getPlayer1().getTargets())
-		{
-			Node target = a.getTarget();
-			Container tc = new Container(x,y, 100, 500, stage);
-			TextButton s1 = ButtonMaker.getBasicButton(target.getXPos() + " : " + target.getYPos());
-			tc.addButton(s1);   
-	        
-	        s1 = ButtonMaker.getBasicButton("Show");
-	        s1.addListener(new ChangeListener() {
-	            @Override
-	            public void changed (ChangeEvent event, Actor actor) {
-	            	// show where the node is
-	            }
-	        });   
-	        tc.addButton(s1);  
-	        
-	        s1 = ButtonMaker.getBasicButton("X");
-	        s1.addListener(new ChangeListener() {
-	            @Override
-	            public void changed (ChangeEvent event, Actor actor) {
-	            	 GameController.getInstance().EM().getPlayer1().getTargets().remove(a);
-	            	 // update render of list
-	            	 initTargetList();
-	            }
-	        });   
-	        tc.addButton(s1); 
-	        tc.resizeActors(true);
-	        
-	        targetList.addContainer(tc);
-		}*/
-		targetList.resizeActors(false);
+        container1 = new Container(600,200,50,50, stage);
+	     
+		// Clicking the attack triggers an expenditure of resources on the target node
+        TextButton tb = ButtonMaker.getTexturedButton("", "PU_node_attack", "PU_node_attack");
+        tb.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {}
+        });   
+        container1.addButton(tb);        
+        
+        tb = ButtonMaker.getTexturedButton("", "PU_node_defence", "PU_node_defence");
+        tb.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {}
+        });   
+        container1.addButton(tb);
+        
+        tb = ButtonMaker.getTexturedButton("", "PU_node_interference", "PU_node_interference");
+        tb.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {}
+        });   
+        container1.addButton(tb);
+        container1.resizeActors(true);
+
+        gridContainer.addContainer(container1);
+        gridContainer.addContainer(container2);
 	}
 	
 	public void initialiseAttackDialogue(){
 		dialogueGridContainer = new GridContainer();
-		
-
 		
 		dialogueSliderContainer = new Container(-400,-400,200,100, stage);
 		TextButton s1 = ButtonMaker.getBasicButton("Up");
@@ -182,8 +178,6 @@ public class UIManager {
         });   
         dialogueSliderContainer.addButton(s2);   
 		
-		
-        
 		dialogueContainer = new Container(-200,-200,50,50, stage);
 	     
 		// Clicking the attack triggers an expenditure of resources on the target node
@@ -218,8 +212,6 @@ public class UIManager {
         dialogueContainer.addButton(tb);
         dialogueContainer.resizeActors(true);
         
-        
-
 		dialogueGridContainer.addContainer(dialogueSliderContainer);
 		dialogueGridContainer.addContainer(dialogueContainer);
 	}
@@ -254,6 +246,9 @@ public class UIManager {
 			dialogueGridContainer.render(batch);
 			//attackDialogue.render(batch, attackDialogueTexture);
 		}
+		gridContainer.render(batch);
+		
+		//container2.render(batch);
 		targetList.render(batch);
 		stage.draw();
 	}

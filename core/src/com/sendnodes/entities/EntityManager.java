@@ -213,7 +213,7 @@ public class EntityManager {
 				
 				//GameController.getInstance().UI().showDialogue(map.getMap()[xNode][yNode].getXPos() * node_size[0], map.getMap()[xNode][yNode].getYPos() * node_size[1]);
 				clickedOnATarget = true;
-				GameController.getInstance().UI().reInitTargetList();
+				//GameController.getInstance().UI().initialiseSideDialogue();
 			}
 		}
 		
