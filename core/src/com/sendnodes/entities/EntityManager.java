@@ -51,16 +51,21 @@ public class EntityManager {
 		images = new HashMap<String, Texture>();
 		images.put("node_blue", new Texture("Nodes/Node_blue.png"));
 		images.put("node_red", new Texture("Nodes/Node_red.png"));
-		images.put("node_blue", new Texture("Nodes/Node_blue.png"));
+		images.put("node_green", new Texture("Nodes/Node_green.png"));
 		images.put("node_grey", new Texture("Nodes/Node_grey.png"));
+		
+		images.put("node_player_blue", new Texture("Nodes/King_node_blue.png"));
+		images.put("node_player_red", new Texture("Nodes/King_node_red.png"));
+		images.put("node_player_green", new Texture("Nodes/King_node_green.png"));
 
 		map = new Network(map_size);
 		addLabels(map);
+		
 		players = new ArrayList<Player>();
-		players.add(new Player(map.getRandomNode()));
+		players.add(new Player(map.getRandomNode(), "node_player_blue", "node_blue"));
 		players.get(0).getNode().setOwner(players.get(0));
 		
-		players.add(new Player(map.getRandomNode()));
+		players.add(new Player(map.getRandomNode(), "node_player_red", "node_red"));
 		players.get(1).getNode().setOwner(players.get(1));
 		
 		tile_size = images.get("node_blue").getWidth() * Properties.GRAPHICS_SCALE;
@@ -128,9 +133,8 @@ public class EntityManager {
 				if (currentNode != null) {
 					// if (currentNode)
 					if (map.getMap()[x][y].getOwner() != null) {
-						if (map.getMap()[x][y].getOwner() == players.get(0))
-							batch.draw(images.get("node_blue"), x * node_size[0], y * node_size[1], tile_size,
-									tile_size);
+						batch.draw(images.get(map.getMap()[x][y].getOwner().getNodeTextureName()), x * node_size[0], y * node_size[1], tile_size,
+								tile_size);
 					} else {
 						batch.draw(images.get("node_grey"), x * node_size[0], y * node_size[1], tile_size, tile_size);
 					}
@@ -139,10 +143,22 @@ public class EntityManager {
 			}
 		}
 
-		for (Player p : players) {
-			batch.draw(images.get("node_blue"), p.getX() * node_size[0], p.getY() * node_size[1], tile_size, tile_size);
-		}
-
+//		System.out.println("first loop");
+//		for (Player p : players) {
+//			System.out.println(p.getPlayerTextureName());
+//			batch.draw(images.get(p.getPlayerTextureName()), (p.getX() * node_size[0])-(tile_size/2), (p.getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
+//		}
+		
+		System.out.println(((players.get(0).getX() * node_size[0])-(tile_size/2)) + ":" + ((players.get(0).getY() * node_size[1])-(tile_size/2)));
+		System.out.println(((players.get(1).getX() * node_size[0])-(tile_size/2)) + ":" + ((players.get(1).getY() * node_size[1])-(tile_size/2)));
+		//System.out.println();
+		batch.draw(images.get("node_player_blue"), (players.get(0).getX() * node_size[0])-(tile_size/2), (players.get(0).getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
+		batch.draw(images.get("node_player_red"), (players.get(1).getX() * node_size[0])-(tile_size/2), (players.get(1).getY() * node_size[1])-(tile_size/2), tile_size*2, tile_size*2);
+		
+		
+		
+		batch.flush();
+		
 		for (Label l : labels)
 			stage.addActor(l);
 
