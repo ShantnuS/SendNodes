@@ -28,7 +28,7 @@ public class MenuScreen {
 	}
 
 	public void create() {
-		container = new ButtonContainer(Properties.SCREEN_WIDTH / 2 - 100, Properties.SCREEN_HEIGHT * 3 / 4, 200,
+		container = new ButtonContainer(Properties.SCREEN_WIDTH / 2 - 100, Properties.SCREEN_HEIGHT * 3 / 4 -200, 200,
 				Properties.SCREEN_HEIGHT / 2, 200, 100, stage);
 
 		TextButton tb = ButtonMaker.getBasicButton("Play");
@@ -122,6 +122,7 @@ public class MenuScreen {
 		//text
 		background = new Texture(Gdx.files.internal("Titlescreen/text.png"));
         backgroundSprite =new Sprite(background);
+        backgroundSprite.setPosition(Properties.SCREEN_WIDTH/4-50, Properties.SCREEN_HEIGHT*3/4 -100);
 		backgroundSprite.draw(batch);
 		
 		batch.end();

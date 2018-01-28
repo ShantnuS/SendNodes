@@ -42,7 +42,7 @@ public class GameController {
 		
 		System.out.println("initialising");
 		menuScreen = new MenuScreen(stage);
-		uiManager = new UIManager(stage);
+		uiManager = new UIManager(stage); 
 		entityManager = new EntityManager(map_size);
 		soundManager = new SoundManager();
 		screenNumber = 0;
