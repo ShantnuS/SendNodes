@@ -43,7 +43,7 @@ public class Player {
 	
 	public void toggleShield(){
 		shield  = !shield;
-	}
+	} 
 	
 	public void increasePassiveLootGen(int amount){
 		passiveLootGen += amount;
