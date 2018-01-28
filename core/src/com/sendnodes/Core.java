@@ -21,6 +21,8 @@ public class Core extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+
+		controller.update();
 		System.out.println("      =");
 		System.out.println("     ===");
 		System.out.println("    =====");
