@@ -67,8 +67,8 @@ public class GameController {
 	}
 	
 	public void update() {
-		entityManager.update();
 		uiManager.update();
+		entityManager.update();
 	}
 	 
 	
