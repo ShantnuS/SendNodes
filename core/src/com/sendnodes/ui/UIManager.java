@@ -205,7 +205,10 @@ public class UIManager {
 				Attack attack = new Attack(attackDialogue.getPlayer(), attackDialogue.getQuery(), -1);
 				
 				if (!Attack.alreadyExists(attackDialogue.getPlayer().getTargets(), attack))
+				{
 					attackDialogue.getPlayer().addTarget(attack);
+					GameController.getInstance().getSoundManager().playSound(SoundManager.SOUNDS.EXCHANGE.ordinal());
+				}
             }
         });   
         dialogueContainer.addButton(tb);        
